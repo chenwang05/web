@@ -1,0 +1,103 @@
+<script>
+    document.getElementById('mapLink').href = MAP_VIEW_URL;
+    document.getElementById('mapLinkMobile').href = MAP_VIEW_URL;
+    document.getElementById('mapBtnCard').href = MAP_VIEW_URL;
+
+    async function copyIp(){
+        try{
+            await navigator.clipboard.writeText(SERVER_IP);
+            const tip = document.getElementById('copyTip');
+            tip.style.opacity = "1";
+            setTimeout(()=>{tip.style.opacity="0"},1800);
+        }catch(e){
+            alert("复制失败，请手动复制："+SERVER_IP);
+        }
+    }
+    document.getElementById('copyIpBtn').addEventListener('click',copyIp);
+    document.getElementById('copyIpBtn2').addEventListener('click',copyIp);
+
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll',()=>{
+        if(window.scrollY>30){
+            nav.classList.add("shadow-sm");
+        }else{
+            nav.classList.remove("shadow-sm");
+        }
+    })
+
+    // 移动端主菜单
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click',()=>{
+        mobileMenu.classList.toggle('hidden');
+    })
+
+    // 移动端二级菜单折叠
+    document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('svg');
+            content.classList.toggle('hidden');
+            icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        });
+    });
+
+    // ===== 新增：桌面端下拉菜单点击兼容（iPad/触摸设备）=====
+    document.querySelectorAll('.dropdown').forEach(drop => {
+        const trigger = drop.querySelector('span');
+        const menu = drop.querySelector('.dropdown-menu');
+        
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isVisible = menu.style.opacity === '1';
+            // 关闭其他所有下拉
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+                m.style.opacity = '0';
+                m.style.visibility = 'hidden';
+            });
+            // 切换当前
+            if (!isVisible) {
+                menu.style.opacity = '1';
+                menu.style.visibility = 'visible';
+                menu.style.transform = 'translateX(-50%) translateY(0)';
+            }
+        });
+    });
+
+    // 点击空白处关闭所有下拉
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.style.opacity = '0';
+            menu.style.visibility = 'hidden';
+        });
+    });
+
+    async function fetchServerStatus() {
+        const statusEl = document.getElementById('serverStatus');
+        const playerCountEl = document.getElementById('playerCount');
+        const maxPlayerEl = document.getElementById('maxPlayer');
+        const api = `https://api.mcsrvstat.us/2/${QUERY_IP}`;
+        try {
+            const response = await fetch(api);
+            const data = await response.json();
+            if (data.online) {
+                statusEl.textContent = '在线';
+                statusEl.className = 'text-success';
+                playerCountEl.textContent = data.players.online;
+                maxPlayerEl.textContent = data.players.max;
+            } else {
+                statusEl.textContent = '离线';
+                statusEl.className = 'text-red-400';
+                playerCountEl.textContent = '0';
+                maxPlayerEl.textContent = '0';
+            }
+        } catch (error) {
+            console.error('获取服务器状态失败:', error);
+            statusEl.textContent = '获取失败';
+            statusEl.className = 'text-red-400';
+        }
+    }
+    fetchServerStatus();
+    setInterval(fetchServerStatus, 60000);
+</script>
