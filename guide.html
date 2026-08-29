@@ -38,58 +38,58 @@
                 content: "";
                 position: fixed;
                 inset: 0;
-                background: rgba(245, 243, 238, 0.72);
-                backdrop-filter: blur(2px);
-                -webkit-backdrop-filter: blur(2px);
+                background: rgba(0, 0, 0, 0.08);
+                backdrop-filter: blur(1px);
+                -webkit-backdrop-filter: blur(1px);
                 pointer-events: none;
                 z-index: 0;
             }
 
             .glass {
-                background-color: rgba(255,255,255,0.42);
-                backdrop-filter: blur(18px) saturate(160%);
-                -webkit-backdrop-filter: blur(18px) saturate(160%);
-                border: 1px solid rgba(255,255,255,0.52);
+                background-color: rgba(255, 255, 255, 0.16);
+                backdrop-filter: blur(20px) saturate(180%);
+                -webkit-backdrop-filter: blur(20px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, 0.22);
             }
             .glass-strong {
-                background-color: rgba(255,255,255,0.35);
-                backdrop-filter: blur(22px) saturate(150%);
-                -webkit-backdrop-filter: blur(22px) saturate(150%);
-                border: 1px solid rgba(255,255,255,0.45);
+                background-color: rgba(255, 255, 255, 0.14);
+                backdrop-filter: blur(26px) saturate(180%);
+                -webkit-backdrop-filter: blur(26px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, 0.2);
             }
             .glass-nav {
-                background-color: rgba(255,255,255,0.48);
-                backdrop-filter: blur(16px) saturate(160%);
-                -webkit-backdrop-filter: blur(16px) saturate(160%);
-                border-bottom: 1px solid rgba(255,255,255,0.58);
+                background-color: rgba(255, 255, 255, 0.22);
+                backdrop-filter: blur(24px) saturate(180%);
+                -webkit-backdrop-filter: blur(24px) saturate(180%);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.3);
             }
             .glass-card {
-                background-color: rgba(255,255,255,0.45);
-                backdrop-filter: blur(20px) saturate(160%);
-                -webkit-backdrop-filter: blur(20px) saturate(160%);
-                border: 1px solid rgba(255,255,255,0.55);
-                box-shadow: 0 8px 36px rgba(0,0,0,0.07);
+                background-color: rgba(255, 255, 255, 0.18);
+                backdrop-filter: blur(24px) saturate(180%);
+                -webkit-backdrop-filter: blur(24px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
             }
             .glass-card-hover {
                 transition: all 0.28s ease;
             }
             .glass-card-hover:hover {
                 transform: translateY(-4px);
-                background-color: rgba(255,255,255,0.58);
-                box-shadow: 0 12px 44px rgba(134,168,135,0.16);
+                background-color: rgba(255, 255, 255, 0.24);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
             }
             .glass-btn {
-                background-color: rgba(255,255,255,0.45);
-                backdrop-filter: blur(14px);
-                -webkit-backdrop-filter: blur(14px);
-                border: 1px solid rgba(255,255,255,0.55);
-                box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+                background-color: rgba(255, 255, 255, 0.18);
+                backdrop-filter: blur(18px) saturate(180%);
+                -webkit-backdrop-filter: blur(18px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
                 transition: all 0.25s ease;
             }
             .glass-btn:hover {
                 transform: translateY(-2px);
-                background-color: rgba(255,255,255,0.6);
-                box-shadow: 0 8px 26px rgba(134,168,135,0.15);
+                background-color: rgba(255, 255, 255, 0.28);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
             }
 
             .nav-link-hover {
@@ -136,10 +136,16 @@
                 position: relative;
                 z-index: 1;
             }
+            .text-deep {
+                color: #1f2937;
+            }
+            .text-mid {
+                color: #4b5563;
+            }
         }
     </style>
 </head>
-<body class="bg-world text-gray-700 font-sans scroll-smooth min-h-screen">
+<body class="bg-world text-mid font-sans scroll-smooth min-h-screen">
 <script>
     const SERVER_IP = "senyumc.top:33347";
     const MAP_VIEW_URL = "https://map.senyumc.top";
@@ -149,24 +155,24 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
             <div class="flex items-center">
-                <a href="./index.html" class="text-lg font-medium text-gray-800">森屿小破服</a>
+                <a href="./index.html" class="text-lg font-medium text-deep">森屿小破服</a>
             </div>
             <div class="hidden md:flex space-x-7 items-center">
-                <a href="./index.html" class="text-gray-600 hover:text-primary transition-colors nav-link-hover">首页</a>
+                <a href="./index.html" class="text-mid hover:text-primary transition-colors nav-link-hover">首页</a>
                 <div class="dropdown">
                     <span class="text-primary font-medium nav-link-hover">服务器指南</span>
                     <div class="dropdown-menu glass-card rounded-xl py-2 text-sm">
-                        <a href="#gameplay" class="block px-4 py-2 text-gray-600 hover:text-primary hover:bg-white/30 transition-colors">玩法介绍</a>
-                        <a href="#connect" class="block px-4 py-2 text-gray-600 hover:text-primary hover:bg-white/30 transition-colors">连接教程</a>
-                        <a href="#rules" class="block px-4 py-2 text-gray-600 hover:text-primary hover:bg-white/30 transition-colors">服务器规则</a>
-                        <a href="./donate.html" class="block px-4 py-2 text-gray-600 hover:text-primary hover:bg-white/30 transition-colors">捐助支持</a>
+                        <a href="#gameplay" class="block px-4 py-2 text-mid hover:text-primary hover:bg-white/20 transition-colors">玩法介绍</a>
+                        <a href="#connect" class="block px-4 py-2 text-mid hover:text-primary hover:bg-white/20 transition-colors">连接教程</a>
+                        <a href="#rules" class="block px-4 py-2 text-mid hover:text-primary hover:bg-white/20 transition-colors">服务器规则</a>
+                        <a href="./donate.html" class="block px-4 py-2 text-mid hover:text-primary hover:bg-white/20 transition-colors">捐助支持</a>
                     </div>
                 </div>
-                <a id="mapLink" href="#" target="_blank" class="text-gray-600 hover:text-primary transition-colors nav-link-hover">家园世界地图</a>
-                <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="text-gray-600 hover:text-primary transition-colors nav-link-hover">服务器合影</a>
+                <a id="mapLink" href="#" target="_blank" class="text-mid hover:text-primary transition-colors nav-link-hover">家园世界地图</a>
+                <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="text-mid hover:text-primary transition-colors nav-link-hover">服务器合影</a>
             </div>
             <div class="md:hidden">
-                <button id="menuBtn" class="text-gray-600 focus:outline-none">
+                <button id="menuBtn" class="text-mid focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
@@ -174,9 +180,9 @@
             </div>
         </div>
     </div>
-    <div id="mobileMenu" class="hidden md:hidden glass-strong border-t border-white/40">
+    <div id="mobileMenu" class="hidden md:hidden glass-strong border-t border-white/20">
         <div class="px-4 py-3 space-y-1">
-            <a href="./index.html" class="block py-2 text-gray-600">首页</a>
+            <a href="./index.html" class="block py-2 text-mid">首页</a>
             <div class="mobile-dropdown">
                 <div class="flex justify-between items-center py-2 text-primary font-medium mobile-dropdown-btn">
                     <span>服务器指南</span>
@@ -191,8 +197,8 @@
                     <a href="./donate.html" class="block py-1 text-gray-500">捐助支持</a>
                 </div>
             </div>
-            <a id="mapLinkMobile" href="#" target="_blank" class="block py-2 text-gray-600">家园世界地图</a>
-            <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="block py-2 text-gray-600">服务器合影</a>
+            <a id="mapLinkMobile" href="#" target="_blank" class="block py-2 text-mid">家园世界地图</a>
+            <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="block py-2 text-mid">服务器合影</a>
         </div>
     </div>
 </nav>
@@ -200,16 +206,16 @@
 <div class="page-content">
     <section class="pt-32 pb-16 px-4">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-[clamp(1.8rem,4vw,2.4rem)] font-medium text-gray-800 mb-8 text-center">服务器指南</h1>
+            <h1 class="text-[clamp(1.8rem,4vw,2.4rem)] font-medium text-deep mb-8 text-center">服务器指南</h1>
 
             <!-- 一、玩法介绍 -->
             <section id="gameplay" class="mb-16 scroll-mt-20">
-                <h2 class="text-xl font-medium text-gray-800 mb-6 flex items-center gap-3">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
                     <span class="w-1 h-6 bg-primary rounded-full"></span>
                     一、服务器介绍 & 玩法
                 </h2>
                 <div class="glass-card rounded-2xl p-7 glass-card-hover mb-6">
-                    <h3 class="text-lg font-medium text-gray-800 mb-3">关于森屿</h3>
+                    <h3 class="text-lg font-medium text-deep mb-3">关于森屿</h3>
                     <p class="leading-relaxed">
                         森屿是主打社区原版生存的Minecraft服务器，采用Java端Purpur服务端，通过间歇泉实现基岩版兼容。不需要Minecraft正版账号，离线模式即可直接进入游戏。
                         服务器追求轻量化，尽量保留原版游戏体验，插件仅用于优化体验，不会添加破坏平衡的功能。希望打造一个可以安心建造、自由探索的社区。
@@ -217,42 +223,42 @@
                 </div>
                 <div class="grid md:grid-cols-2 gap-5 mb-6">
                     <div class="glass-card rounded-2xl p-6 glass-card-hover">
-                        <h3 class="font-medium text-gray-800 mb-2">✅ Java原生体验</h3>
+                        <h3 class="font-medium text-deep mb-2">✅ Java原生体验</h3>
                         <p class="text-gray-500 text-sm">服务端为Java版，游戏逻辑、红石、怪物行为完全原版。</p>
                     </div>
                     <div class="glass-card rounded-2xl p-6 glass-card-hover">
-                        <h3 class="font-medium text-gray-800 mb-2">✅ 基岩全版本兼容</h3>
+                        <h3 class="font-medium text-deep mb-2">✅ 基岩全版本兼容</h3>
                         <p class="text-gray-500 text-sm">手机、主机、Win10基岩版均可连接，跨版本互通游玩。</p>
                     </div>
                     <div class="glass-card rounded-2xl p-6 glass-card-hover">
-                        <h3 class="font-medium text-gray-800 mb-2">✅ 无需正版账号</h3>
+                        <h3 class="font-medium text-deep mb-2">✅ 无需正版账号</h3>
                         <p class="text-gray-500 text-sm">离线账号直接登录，降低进入门槛。</p>
                     </div>
                     <div class="glass-card rounded-2xl p-6 glass-card-hover">
-                        <h3 class="font-medium text-gray-800 mb-2">✅ 友好社区生存</h3>
+                        <h3 class="font-medium text-deep mb-2">✅ 友好社区生存</h3>
                         <p class="text-gray-500 text-sm">鼓励互相帮助，禁止恶意破坏，维护舒适的生存环境。</p>
                     </div>
                 </div>
                 <div class="grid md:grid-cols-2 gap-5 mb-6">
                     <div class="glass-card rounded-2xl p-6 glass-card-hover">
-                        <h3 class="font-medium text-gray-800 mb-2">👥 普通玩家权限完整</h3>
+                        <h3 class="font-medium text-deep mb-2">👥 普通玩家权限完整</h3>
                         <p class="text-gray-500 text-sm">普通玩家拥有全部基础生存权限，可自由挖矿、建造、探索世界，领地功能开放。</p>
                     </div>
                     <div class="glass-card rounded-2xl p-6 glass-card-hover">
-                        <h3 class="font-medium text-gray-800 mb-2">⭐ 会员专属飞行特权</h3>
+                        <h3 class="font-medium text-deep mb-2">⭐ 会员专属飞行特权</h3>
                         <p class="text-gray-500 text-sm">会员解锁装备飞行功能，高空建造更便捷，附带各类便捷辅助小功能。</p>
                     </div>
                     <div class="glass-card rounded-2xl p-6 glass-card-hover">
-                        <h3 class="font-medium text-gray-800 mb-2">🛡️ 全域领地保护</h3>
+                        <h3 class="font-medium text-deep mb-2">🛡️ 全域领地保护</h3>
                         <p class="text-gray-500 text-sm">一键圈地保护建筑，防止他人拆家、偷取物资，安心打造私人基地。</p>
                     </div>
                     <div class="glass-card rounded-2xl p-6 glass-card-hover">
-                        <h3 class="font-medium text-gray-800 mb-2">🌐 双端同服互通</h3>
+                        <h3 class="font-medium text-deep mb-2">🌐 双端同服互通</h3>
                         <p class="text-gray-500 text-sm">Java、手机/主机基岩玩家共用同一个世界，不受设备限制一起游玩。</p>
                     </div>
                 </div>
                 <div class="glass-card rounded-2xl p-7 glass-card-hover">
-                    <h3 class="text-lg font-medium text-gray-800 mb-3">原版生存核心</h3>
+                    <h3 class="text-lg font-medium text-deep mb-3">原版生存核心</h3>
                     <p class="leading-relaxed">
                         服务器核心为原版生存。你可以自由挖矿、收集资源、搭建基地、探索世界、挑战地下城。没有魔改装备，没有变态道具，一切回归Minecraft原本的生存乐趣。
                         你可以选择独居，也可以和朋友结伴建造大型社区。仅安装少量实用辅助插件：领地保护防止恶意破坏、简易传送、聊天优化等。
@@ -262,23 +268,23 @@
 
             <!-- 二、连接教程 -->
             <section id="connect" class="mb-16 scroll-mt-20">
-                <h2 class="text-xl font-medium text-gray-800 mb-6 flex items-center gap-3">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
                     <span class="w-1 h-6 bg-success rounded-full"></span>
                     二、连接教程
                 </h2>
                 <div class="glass-card rounded-2xl p-6 glass-card-hover mb-6">
                     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                         <div>
-                            <h3 class="text-lg font-medium text-gray-800">服务器地址</h3>
-                            <p class="text-gray-500 mt-1 font-mono">senyumc.top:33347</p>
+                            <h3 class="text-lg font-medium text-deep">服务器地址</h3>
+                            <p class="text-mid mt-1 font-mono">senyumc.top:33347</p>
                         </div>
-                        <button id="copyIpBtn" class="glass-btn px-5 py-2 rounded-full text-gray-600">复制IP</button>
+                        <button id="copyIpBtn" class="glass-btn px-5 py-2 rounded-full text-deep">复制IP</button>
                     </div>
                     <p id="copyTip" class="mt-3 text-success h-6 opacity-0 transition-opacity">✅ 地址已复制到剪贴板</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-5 mb-6">
                     <div class="glass-card rounded-2xl p-6 glass-card-hover">
-                        <h3 class="font-medium text-gray-800 mb-3">🟦 Java版连接步骤</h3>
+                        <h3 class="font-medium text-deep mb-3">🟦 Java版连接步骤</h3>
                         <ol class="list-decimal pl-5 space-y-2 text-sm">
                             <li>复制服务器地址 senyumc.top:33347</li>
                             <li>打开Minecraft Java版，进入多人游戏</li>
@@ -287,7 +293,7 @@
                         </ol>
                     </div>
                     <div class="glass-card rounded-2xl p-6 glass-card-hover">
-                        <h3 class="font-medium text-gray-800 mb-3">🟩 基岩版连接步骤</h3>
+                        <h3 class="font-medium text-deep mb-3">🟩 基岩版连接步骤</h3>
                         <ol class="list-decimal pl-5 space-y-2 text-sm">
                             <li>选择添加外部服务器</li>
                             <li>服务器地址：senyumc.top</li>
@@ -297,18 +303,18 @@
                     </div>
                 </div>
                 <div class="glass-card rounded-2xl p-6 glass-card-hover">
-                    <h3 class="font-medium text-gray-800 mb-3">常见问题</h3>
+                    <h3 class="font-medium text-deep mb-3">常见问题</h3>
                     <div class="space-y-3 text-sm">
                         <div>
-                            <p class="font-medium text-gray-700">Q：基岩版可以进服吗？</p>
+                            <p class="font-medium text-deep">Q：基岩版可以进服吗？</p>
                             <p>A：可以，全版本基岩均可连接。</p>
                         </div>
                         <div>
-                            <p class="font-medium text-gray-700">Q：需要Minecraft正版账号吗？</p>
+                            <p class="font-medium text-deep">Q：需要Minecraft正版账号吗？</p>
                             <p>A：不需要，离线账号就可以直接游玩。</p>
                         </div>
                         <div>
-                            <p class="font-medium text-gray-700">Q：连接失败怎么办？</p>
+                            <p class="font-medium text-deep">Q：连接失败怎么办？</p>
                             <p>A：确认IP端口填写完整；检查网络；确认游戏版本符合。</p>
                         </div>
                     </div>
@@ -317,7 +323,7 @@
 
             <!-- 三、服务器规则 -->
             <section id="rules" class="scroll-mt-20">
-                <h2 class="text-xl font-medium text-gray-800 mb-6 flex items-center gap-3">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
                     <span class="w-1 h-6 bg-warning rounded-full"></span>
                     三、服务器规则
                 </h2>
@@ -355,7 +361,7 @@
                     </ul>
                 </div>
                 <div class="glass-card rounded-2xl p-6 glass-card-hover mb-6">
-                    <h3 class="font-medium text-lg mb-3 text-gray-800">通用分级处罚标准</h3>
+                    <h3 class="font-medium text-lg mb-3 text-deep">通用分级处罚标准</h3>
                     <div class="space-y-3 text-sm">
                         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 border-l-4 border-blue-400 pl-4 py-2">
                             <span><strong>一级违规：</strong>脏话、小刷屏、轻度骚扰</span>
@@ -379,7 +385,7 @@
                     <h3 class="font-medium text-lg mb-3 text-success">红石与生电机器规则</h3>
                     <div class="grid md:grid-cols-2 gap-6 text-sm">
                         <div>
-                            <p class="font-medium text-gray-800 mb-2">✅ 允许正常使用</p>
+                            <p class="font-medium text-deep mb-2">✅ 允许正常使用</p>
                             <ul class="space-y-1">
                                 <li>• 常规刷线机、简易全自动农场</li>
                                 <li>• 普通刷石机、小型生电机器</li>
@@ -401,8 +407,8 @@
         </div>
     </section>
 
-    <footer class="border-t border-white/30 py-8 glass-strong">
-        <div class="max-w-6xl mx-auto px-4 text-center text-gray-600 text-sm">
+    <footer class="border-t border-white/20 py-8 glass-strong">
+        <div class="max-w-6xl mx-auto px-4 text-center text-mid text-sm">
             <p>举世皆浊我独清，众人皆醉我独醒</p>
             <p class="mt-2">© 2026 森屿小破服 mc热爱者社区</p>
         </div>

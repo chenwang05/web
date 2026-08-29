@@ -37,45 +37,45 @@
                 content: "";
                 position: fixed;
                 inset: 0;
-                background: rgba(245, 243, 238, 0.72);
-                backdrop-filter: blur(2px);
-                -webkit-backdrop-filter: blur(2px);
+                background: rgba(0, 0, 0, 0.08);
+                backdrop-filter: blur(1px);
+                -webkit-backdrop-filter: blur(1px);
                 pointer-events: none;
                 z-index: 0;
             }
 
             .glass {
-                background-color: rgba(255,255,255,0.42);
-                backdrop-filter: blur(18px) saturate(160%);
-                -webkit-backdrop-filter: blur(18px) saturate(160%);
-                border: 1px solid rgba(255,255,255,0.52);
+                background-color: rgba(255, 255, 255, 0.16);
+                backdrop-filter: blur(20px) saturate(180%);
+                -webkit-backdrop-filter: blur(20px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, 0.22);
             }
             .glass-strong {
-                background-color: rgba(255,255,255,0.35);
-                backdrop-filter: blur(22px) saturate(150%);
-                -webkit-backdrop-filter: blur(22px) saturate(150%);
-                border: 1px solid rgba(255,255,255,0.45);
+                background-color: rgba(255, 255, 255, 0.14);
+                backdrop-filter: blur(26px) saturate(180%);
+                -webkit-backdrop-filter: blur(26px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, 0.2);
             }
             .glass-nav {
-                background-color: rgba(255,255,255,0.48);
-                backdrop-filter: blur(16px) saturate(160%);
-                -webkit-backdrop-filter: blur(16px) saturate(160%);
-                border-bottom: 1px solid rgba(255,255,255,0.58);
+                background-color: rgba(255, 255, 255, 0.22);
+                backdrop-filter: blur(24px) saturate(180%);
+                -webkit-backdrop-filter: blur(24px) saturate(180%);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.3);
             }
             .glass-card {
-                background-color: rgba(255,255,255,0.45);
-                backdrop-filter: blur(20px) saturate(160%);
-                -webkit-backdrop-filter: blur(20px) saturate(160%);
-                border: 1px solid rgba(255,255,255,0.55);
-                box-shadow: 0 8px 36px rgba(0,0,0,0.07);
+                background-color: rgba(255, 255, 255, 0.18);
+                backdrop-filter: blur(24px) saturate(180%);
+                -webkit-backdrop-filter: blur(24px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
             }
             .glass-card-hover {
                 transition: all 0.28s ease;
             }
             .glass-card-hover:hover {
                 transform: translateY(-4px);
-                background-color: rgba(255,255,255,0.58);
-                box-shadow: 0 12px 44px rgba(134,168,135,0.16);
+                background-color: rgba(255, 255, 255, 0.24);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
             }
 
             .nav-link-hover {
@@ -119,10 +119,16 @@
                 position: relative;
                 z-index: 1;
             }
+            .text-deep {
+                color: #1f2937;
+            }
+            .text-mid {
+                color: #4b5563;
+            }
         }
     </style>
 </head>
-<body class="bg-world text-gray-700 font-sans scroll-smooth min-h-screen">
+<body class="bg-world text-mid font-sans scroll-smooth min-h-screen">
 <script>
     const SERVER_IP = "senyumc.top:33347";
     const MAP_VIEW_URL = "https://map.senyumc.top";
@@ -132,24 +138,24 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
             <div class="flex items-center">
-                <a href="./index.html" class="text-lg font-medium text-gray-800">森屿小破服</a>
+                <a href="./index.html" class="text-lg font-medium text-deep">森屿小破服</a>
             </div>
             <div class="hidden md:flex space-x-7 items-center">
-                <a href="./index.html" class="text-gray-600 hover:text-primary transition-colors nav-link-hover">首页</a>
+                <a href="./index.html" class="text-mid hover:text-primary transition-colors nav-link-hover">首页</a>
                 <div class="dropdown">
-                    <span class="text-gray-600 hover:text-primary transition-colors nav-link-hover">服务器指南</span>
+                    <span class="text-mid hover:text-primary transition-colors nav-link-hover">服务器指南</span>
                     <div class="dropdown-menu glass-card rounded-xl py-2 text-sm">
-                        <a href="./guide.html#gameplay" class="block px-4 py-2 text-gray-600 hover:text-primary hover:bg-white/30 transition-colors">玩法介绍</a>
-                        <a href="./guide.html#connect" class="block px-4 py-2 text-gray-600 hover:text-primary hover:bg-white/30 transition-colors">连接教程</a>
-                        <a href="./guide.html#rules" class="block px-4 py-2 text-gray-600 hover:text-primary hover:bg-white/30 transition-colors">服务器规则</a>
-                        <a href="./donate.html" class="block px-4 py-2 text-primary bg-white/30">捐助支持</a>
+                        <a href="./guide.html#gameplay" class="block px-4 py-2 text-mid hover:text-primary hover:bg-white/20 transition-colors">玩法介绍</a>
+                        <a href="./guide.html#connect" class="block px-4 py-2 text-mid hover:text-primary hover:bg-white/20 transition-colors">连接教程</a>
+                        <a href="./guide.html#rules" class="block px-4 py-2 text-mid hover:text-primary hover:bg-white/20 transition-colors">服务器规则</a>
+                        <a href="./donate.html" class="block px-4 py-2 text-primary bg-white/20">捐助支持</a>
                     </div>
                 </div>
-                <a id="mapLink" href="#" target="_blank" class="text-gray-600 hover:text-primary transition-colors nav-link-hover">家园世界地图</a>
-                <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="text-gray-600 hover:text-primary transition-colors nav-link-hover">服务器合影</a>
+                <a id="mapLink" href="#" target="_blank" class="text-mid hover:text-primary transition-colors nav-link-hover">家园世界地图</a>
+                <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="text-mid hover:text-primary transition-colors nav-link-hover">服务器合影</a>
             </div>
             <div class="md:hidden">
-                <button id="menuBtn" class="text-gray-600 focus:outline-none">
+                <button id="menuBtn" class="text-mid focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
@@ -157,11 +163,11 @@
             </div>
         </div>
     </div>
-    <div id="mobileMenu" class="hidden md:hidden glass-strong border-t border-white/40">
+    <div id="mobileMenu" class="hidden md:hidden glass-strong border-t border-white/20">
         <div class="px-4 py-3 space-y-1">
-            <a href="./index.html" class="block py-2 text-gray-600">首页</a>
+            <a href="./index.html" class="block py-2 text-mid">首页</a>
             <div class="mobile-dropdown">
-                <div class="flex justify-between items-center py-2 text-gray-600 mobile-dropdown-btn">
+                <div class="flex justify-between items-center py-2 text-mid mobile-dropdown-btn">
                     <span>服务器指南</span>
                     <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -171,11 +177,11 @@
                     <a href="./guide.html#gameplay" class="block py-1 text-gray-500">玩法介绍</a>
                     <a href="./guide.html#connect" class="block py-1 text-gray-500">连接教程</a>
                     <a href="./guide.html#rules" class="block py-1 text-gray-500">服务器规则</a>
-                    <a href="./donate.html" class="block py-1 text-primary">捐助支持</a>
+                    <a href="./donate.html" class="block py-1 text-gray-500">捐助支持</a>
                 </div>
             </div>
-            <a id="mapLinkMobile" href="#" target="_blank" class="block py-2 text-gray-600">家园世界地图</a>
-            <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="block py-2 text-gray-600">服务器合影</a>
+            <a id="mapLinkMobile" href="#" target="_blank" class="block py-2 text-mid">家园世界地图</a>
+            <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="block py-2 text-mid">服务器合影</a>
         </div>
     </div>
 </nav>
@@ -183,10 +189,10 @@
 <div class="page-content">
     <section class="pt-32 pb-16 px-4">
         <div class="max-w-3xl mx-auto">
-            <h1 class="text-[clamp(1.8rem,4vw,2.4rem)] font-medium text-gray-800 mb-8 text-center">捐助支持</h1>
+            <h1 class="text-[clamp(1.8rem,4vw,2.4rem)] font-medium text-deep mb-8 text-center">捐助支持</h1>
 
             <div class="glass-card rounded-2xl p-7 glass-card-hover mb-8">
-                <h2 class="text-xl font-medium text-gray-800 mb-4 text-center">关于捐助</h2>
+                <h2 class="text-xl font-medium text-deep mb-4 text-center">关于捐助</h2>
                 <p class="text-sm leading-relaxed text-center max-w-xl mx-auto">
                     您的捐助将用于服务器维护和升级。捐助后您不会获得任何额外的服务器内容。<br>
                     捐助金额超过 5 元将记录在下方列表中，如果没出现可以联系服主进行添加。<br>
@@ -195,21 +201,21 @@
             </div>
 
             <div class="glass-card rounded-2xl p-7 glass-card-hover mb-8">
-                <h2 class="text-xl font-medium text-gray-800 mb-4 text-center">扫码捐助</h2>
+                <h2 class="text-xl font-medium text-deep mb-4 text-center">扫码捐助</h2>
                 <div class="flex justify-center">
                     <div class="text-center">
-                        <img src="qr.jpg" alt="捐助二维码" class="w-56 h-56 object-contain mx-auto rounded-2xl border-4 border-white/50 shadow-sm">
+                        <img src="qr.jpg" alt="捐助二维码" class="w-56 h-56 object-contain mx-auto rounded-2xl border-4 border-white/30 shadow-sm">
                         <p class="text-gray-500 text-sm mt-3">截图识别二维码进行捐助</p>
                     </div>
                 </div>
             </div>
 
             <div class="glass-card rounded-2xl p-7 glass-card-hover">
-                <h2 class="text-xl font-medium text-gray-800 mb-4 text-center">捐助光荣榜</h2>
+                <h2 class="text-xl font-medium text-deep mb-4 text-center">捐助光荣榜</h2>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left">
                         <thead class="text-xs text-gray-500">
-                            <tr class="border-b border-white/40">
+                            <tr class="border-b border-white/20">
                                 <th scope="col" class="px-6 py-3 font-medium">捐助者</th>
                                 <th scope="col" class="px-6 py-3 font-medium">金额</th>
                                 <th scope="col" class="px-6 py-3 font-medium">留言</th>
@@ -224,8 +230,8 @@
         </div>
     </section>
 
-    <footer class="border-t border-white/30 py-8 glass-strong">
-        <div class="max-w-6xl mx-auto px-4 py-6 text-center text-gray-600 text-sm">
+    <footer class="border-t border-white/20 py-8 glass-strong">
+        <div class="max-w-6xl mx-auto px-4 py-6 text-center text-mid text-sm">
             <p>此情可待成追忆，只是当时已惘然</p>                    
             <p class="mt-2">©2026 森屿小破服 mc热爱者社区</p>
         </div>
@@ -296,11 +302,11 @@
             }
             data.forEach(item => {
                 const row = document.createElement('tr');
-                row.className = 'border-b border-white/30 hover:bg-white/20 transition-colors';
+                row.className = 'border-b border-white/20 hover:bg-white/15 transition-colors';
                 
                 const message = item.message ? item.message : '<span class="text-gray-400">-</span>';
                 row.innerHTML = `
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-800 whitespace-nowrap">
+                    <th scope="row" class="px-6 py-4 font-medium text-deep whitespace-nowrap">
                         ${item.name}
                     </th>
                     <td class="px-6 py-4 text-success font-medium">
