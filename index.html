@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>森屿小破服</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#86a887',
+                        success: '#95b793',
+                        warning: '#d9b382',
+                        danger: '#d07b7b',
+                        muted: '#8a8a8a',
+                        indigo: '#a59bbf'
+                    },
+                    fontFamily: {
+                        sans: ['"PingFang SC"', '"Microsoft YaHei"', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            /* 全屏背景图 */
+            .bg-world {
+                position: relative;
+                background-image: url('spawn.jpg');
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+            }
+            .bg-world::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background: rgba(245, 243, 238, 0.72);
+                backdrop-filter: blur(2px);
+                -webkit-backdrop-filter: blur(2px);
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            /* 磨砂玻璃组件 */
+            .glass {
+                background-color: rgba(255,255,255,0.42);
+                backdrop-filter: blur(18px) saturate(160%);
+                -webkit-backdrop-filter: blur(18px) saturate(160%);
+                border: 1px solid rgba(255,255,255,0.52);
+            }
+            .glass-strong {
+                background-color: rgba(255,255,255,0.35);
+                backdrop-filter: blur(22px) saturate(150%);
+                -webkit-backdrop-filter: blur(22px) saturate(150%);
+                border: 1px solid rgba(255,255,255,0.45);
+            }
+            .glass-nav {
+                background-color: rgba(255,255,255,0.48);
+                backdrop-filter: blur(16px) saturate(160%);
+                -webkit-backdrop-filter: blur(16px) saturate(160%);
+                border-bottom: 1px solid rgba(255,255,255,0.58);
+            }
+            .glass-card {
+                background-color: rgba(255,255,255,0.45);
+                backdrop-filter: blur(20px) saturate(160%);
+                -webkit-backdrop-filter: blur(20px) saturate(160%);
+                border: 1px solid rgba(255,255,255,0.55);
+                box-shadow: 0 8px 36px rgba(0,0,0,0.07);
+            }
+            .glass-card-hover {
+                transition: all 0.28s ease;
+            }
+            .glass-card-hover:hover {
+                transform: translateY(-4px);
+                background-color: rgba(255,255,255,0.58);
+                box-shadow: 0 12px 44px rgba(134,168,135,0.16);
+            }
+            .glass-btn {
+                background-color: rgba(255,255,255,0.45);
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                border: 1px solid rgba(255,255,255,0.55);
+                box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+                transition: all 0.25s ease;
+            }
+            .glass-btn:hover {
+                transform: translateY(-2px);
+                background-color: rgba(255,255,255,0.6);
+                box-shadow: 0 8px 26px rgba(134,168,135,0.15);
+            }
+            .glass-btn-primary {
+                background-color: rgba(134,168,135,0.85);
+                color: white;
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border: 1px solid rgba(134,168,135,0.9);
+                box-shadow: 0 4px 16px rgba(134,168,135,0.24);
+                transition: all 0.25s ease;
+            }
+            .glass-btn-primary:hover {
+                transform: translateY(-2px);
+                background-color: rgba(134,168,135,0.95);
+                box-shadow: 0 8px 26px rgba(134,168,135,0.34);
+            }
+
+            .nav-link-hover {
+                position: relative;
+                cursor: pointer;
+            }
+            .nav-link-hover::after {
+                content: "";
+                position: absolute;
+                width: 0;
+                height: 1.5px;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: -4px;
+                background-color: #86a887;
+                transition: width 0.24s ease;
+            }
+            .nav-link-hover:hover::after {
+                width: 100%;
+            }
+            .dropdown {
+                position: relative;
+            }
+            .dropdown-menu {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%) translateY(6px);
+                min-width: 150px;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.22s ease;
+                z-index: 60;
+            }
+            .dropdown:hover .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) translateY(0);
+            }
+
+            /* 内容层上浮 */
+            .page-content {
+                position: relative;
+                z-index: 1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-world text-gray-700 font-sans scroll-smooth min-h-screen">
+    <script>
+        const SERVER_IP = "senyumc.top:33347";
+        const QUERY_IP = "cn-hz-1.qwq.fan:33346";
+        const MAP_VIEW_URL = "http://map.senyumc.top";
+    </script>
+
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 glass-nav">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-lg font-medium text-gray-800">森屿小破服</span>
+                </div>
+
+                <div class="hidden md:flex space-x-7 items-center">
+                    <a href="./index.html" class="text-primary font-medium nav-link-hover">首页</a>
+
+                    <div class="dropdown">
+                        <span class="text-gray-600 hover:text-primary transition-colors nav-link-hover">服务器指南</span>
+                        <div class="dropdown-menu glass-card rounded-xl py-2 text-sm">
+                            <a href="./guide.html#gameplay" class="block px-4 py-2 text-gray-600 hover:text-primary hover:bg-white/30 transition-colors">玩法介绍</a>
+                            <a href="./guide.html#connect" class="block px-4 py-2 text-gray-600 hover:text-primary hover:bg-white/30 transition-colors">连接教程</a>
+                            <a href="./guide.html#rules" class="block px-4 py-2 text-gray-600 hover:text-primary hover:bg-white/30 transition-colors">服务器规则</a>
+                            <a href="./donate.html" class="block px-4 py-2 text-gray-600 hover:text-primary hover:bg-white/30 transition-colors">捐助支持</a>
+                        </div>
+                    </div>
+
+                    <a id="mapLink" href="#" target="_blank" class="text-gray-600 hover:text-primary transition-colors nav-link-hover">家园世界地图</a>
+                    <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="text-gray-600 hover:text-primary transition-colors nav-link-hover">服务器合影</a>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="menuBtn" class="text-gray-600 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden glass-strong border-t border-white/40">
+            <div class="px-4 py-3 space-y-1">
+                <a href="./index.html" class="block py-2 text-primary font-medium">首页</a>
+
+                <div class="mobile-dropdown">
+                    <div class="flex justify-between items-center py-2 text-gray-600 mobile-dropdown-btn">
+                        <span>服务器指南</span>
+                        <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="mobile-dropdown-content hidden pl-4 pb-2 space-y-1 text-sm">
+                        <a href="./guide.html#gameplay" class="block py-1 text-gray-500">玩法介绍</a>
+                        <a href="./guide.html#connect" class="block py-1 text-gray-500">连接教程</a>
+                        <a href="./guide.html#rules" class="block py-1 text-gray-500">服务器规则</a>
+                        <a href="./donate.html" class="block py-1 text-gray-500">捐助支持</a>
+                    </div>
+                </div>
+
+                <a id="mapLinkMobile" href="#" target="_blank" class="block py-2 text-gray-600">家园世界地图</a>
+                <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="block py-2 text-gray-600">服务器合影</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <section class="pt-32 pb-20 px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-[clamp(2rem,5vw,3rem)] font-medium text-gray-800 mb-4">森屿 Minecraft 服务器</h1>
+                <p class="text-xl text-gray-600 mb-3 font-mono">senyumc.top:33347</p>
+                <div class="flex flex-wrap justify-center gap-2 mb-8">
+                    <span class="px-3 py-1 rounded-full glass text-primary text-sm">Java支持1.21.1+</span>
+                    <span class="px-3 py-1 rounded-full glass text-success text-sm">基岩版支持26.0+</span>
+                    <span class="px-3 py-1 rounded-full glass text-amber-600 text-sm">无需正版账号</span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button id="copyIpBtn" class="glass-btn-primary px-6 py-2.5 rounded-full">复制服务器地址</button>
+                    <a href="./guide.html#connect" class="glass-btn text-gray-700 px-6 py-2.5 rounded-full">前往连接教程</a>
+                </div>
+                <p id="copyTip" class="mt-3 text-success h-6 opacity-0 transition-opacity">✅ 地址已复制到剪贴板</p>
+            </div>
+        </section>
+
+        <section class="pb-16 px-4">
+            <div class="max-w-3xl mx-auto">
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-800">服务器状态</h3>
+                            <p class="text-gray-500 mt-1">地址：<span class="font-mono">senyumc.top:33347</span></p>
+                            <div class="mt-2 flex gap-x-5 text-sm">
+                                <span>状态：<span id="serverStatus" class="text-success">获取中...</span></span>
+                                <span>在线：<span id="playerCount">--</span> / <span id="maxPlayer">--</span></span>
+                            </div>
+                        </div>
+                        <button id="copyIpBtn2" class="glass-btn px-5 py-2 rounded-full text-gray-600">复制IP</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-16 px-4">
+            <div class="max-w-3xl mx-auto">
+                <div class="glass-card rounded-2xl p-7 glass-card-hover">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-full glass flex items-center justify-center text-primary text-xl">ℹ</div>
+                        <div>
+                            <h2 class="text-xl font-medium text-gray-800 mb-3">关于本服</h2>
+                            <p class="text-gray-600 leading-relaxed">
+                                社区生存向Minecraft服务器，Java、基岩玩家互通，离线账号也可以直接游玩。以原版生存为核心，搭配实用拓展，打造轻松友好的游戏社区。
+                            </p>
+                            <div class="mt-5">
+                                <a href="./guide.html#gameplay" class="glass-btn inline-block text-primary px-5 py-2 rounded-full">查看完整介绍 →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-20 px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-xl font-medium text-gray-800 mb-6 text-center">玩法预览</h2>
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                        <h3 class="font-medium text-gray-800 mb-2">原版生存</h3>
+                        <p class="text-gray-500 text-sm">原汁原味的生存体验，自由建造、探索世界。</p>
+                    </div>
+                    <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                        <h3 class="font-medium text-gray-800 mb-2">插件拓展</h3>
+                        <p class="text-gray-500 text-sm">配套实用插件优化游戏体验，不破坏原版核心乐趣。</p>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-center gap-4 flex-wrap">
+                    <a id="mapBtnCard" href="#" target="_blank" class="glass-btn text-gray-600 px-6 py-2.5 rounded-full">查看家园世界地图</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="border-t border-white/30 py-8 glass-strong">
+            <div class="max-w-6xl mx-auto px-4 text-center text-gray-600 text-sm">
+                <p>欲买桂花同载酒，终不似，少年游</p>
+                <p class="mt-2">© 2026 森屿小破服 mc热爱者社区</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('mapLink').href = MAP_VIEW_URL;
+        document.getElementById('mapLinkMobile').href = MAP_VIEW_URL;
+        document.getElementById('mapBtnCard').href = MAP_VIEW_URL;
+
+        async function copyIp(){
+            try{
+                await navigator.clipboard.writeText(SERVER_IP);
+                const tip = document.getElementById('copyTip');
+                tip.style.opacity = "1";
+                setTimeout(()=>{tip.style.opacity="0"},1800);
+            }catch(e){
+                alert("复制失败，请手动复制："+SERVER_IP);
+            }
+        }
+        document.getElementById('copyIpBtn').addEventListener('click',copyIp);
+        document.getElementById('copyIpBtn2').addEventListener('click',copyIp);
+
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll',()=>{
+            if(window.scrollY>30){
+                nav.classList.add("shadow-sm");
+            }else{
+                nav.classList.remove("shadow-sm");
+            }
+        })
+
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click',()=>{
+            mobileMenu.classList.toggle('hidden');
+        })
+
+        document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector('svg');
+                content.classList.toggle('hidden');
+                icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+            });
+        });
+
+        // 桌面端下拉菜单点击兼容
+        document.querySelectorAll('.dropdown').forEach(drop => {
+            const trigger = drop.querySelector('span');
+            const menu = drop.querySelector('.dropdown-menu');
+            
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const isVisible = menu.style.opacity === '1';
+                document.querySelectorAll('.dropdown-menu').forEach(m => {
+                    m.style.opacity = '0';
+                    m.style.visibility = 'hidden';
+                });
+                if (!isVisible) {
+                    menu.style.opacity = '1';
+                    menu.style.visibility = 'visible';
+                    menu.style.transform = 'translateX(-50%) translateY(0)';
+                }
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.style.opacity = '0';
+                menu.style.visibility = 'hidden';
+            });
+        });
+
+        async function fetchServerStatus() {
+            const statusEl = document.getElementById('serverStatus');
+            const playerCountEl = document.getElementById('playerCount');
+            const maxPlayerEl = document.getElementById('maxPlayer');
+            const api = `https://api.mcsrvstat.us/2/${QUERY_IP}`;
+            try {
+                const response = await fetch(api);
+                const data = await response.json();
+                if (data.online) {
+                    statusEl.textContent = '在线';
+                    statusEl.className = 'text-success';
+                    playerCountEl.textContent = data.players.online;
+                    maxPlayerEl.textContent = data.players.max;
+                } else {
+                    statusEl.textContent = '离线';
+                    statusEl.className = 'text-red-400';
+                    playerCountEl.textContent = '0';
+                    maxPlayerEl.textContent = '0';
+                }
+            } catch (error) {
+                console.error('获取服务器状态失败:', error);
+                statusEl.textContent = '获取失败';
+                statusEl.className = 'text-red-400';
+            }
+        }
+        fetchServerStatus();
+        setInterval(fetchServerStatus, 60000);
+    </script>
+</body>
+</html>
