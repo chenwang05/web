@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>捐助支持 - 森屿 Minecraft</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#7a9b7c',
+                        primaryLight: '#95b793',
+                        success: '#86a887',
+                        warning: '#d9b382',
+                        danger: '#d07b7b',
+                        muted: '#8a8a8a',
+                        bgSoft: '#f7f5f0',
+                        bgGradientStart: '#f0f3ee',
+                        bgGradientEnd: '#faf8f3',
+                        purple: '#a59bbf'
+                    },
+                    fontFamily: {
+                        sans: ['"PingFang SC"', '"Microsoft YaHei"', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-world {
+                background: linear-gradient(180deg, #f0f3ee 0%, #f7f5f0 50%, #faf8f3 100%);
+                min-height: 100vh;
+            }
+            .glass-card {
+                background-color: #ffffff;
+                border: 1px solid #eceae4;
+                box-shadow: 0 8px 32px rgba(122, 155, 124, 0.08);
+            }
+            .glass-card-hover {
+                transition: all 0.3s ease;
+            }
+            .glass-card-hover:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 12px 40px rgba(122, 155, 124, 0.12);
+            }
+            .glass-nav {
+                background-color: rgba(255, 255, 255, 0.95);
+                border-bottom: 1px solid #eceae4;
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
+            .nav-link-hover {
+                position: relative;
+                cursor: pointer;
+            }
+            .nav-link-hover::after {
+                content: "";
+                position: absolute;
+                width: 0;
+                height: 1.5px;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: -4px;
+                background-color: #7a9b7c;
+                transition: width 0.24s ease;
+            }
+            .nav-link-hover:hover::after {
+                width: 100%;
+            }
+            .dropdown {
+                position: relative;
+            }
+            .dropdown-menu {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%) translateY(6px);
+                min-width: 150px;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.22s ease;
+                z-index: 60;
+                background: #fff;
+                border: 1px solid #eceae4;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            }
+            .dropdown:hover .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) translateY(0);
+            }
+            .page-content {
+                position: relative;
+                z-index: 1;
+            }
+            .text-deep {
+                color: #2d3a2e;
+            }
+            .text-mid {
+                color: #5a665b;
+            }
+        }
+    </style>
+</head>
+<body class="bg-world text-mid font-sans scroll-smooth">
+<script>
+    const SERVER_IP = "senyumc.top:33347";
+    const MAP_VIEW_URL = "https://map.senyumc.top";
+</script>
+<nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 glass-nav">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+                <a href="./index.html" class="text-lg font-medium text-deep">森屿小破服</a>
+            </div>
+            <div class="hidden md:flex space-x-7 items-center">
+                <a href="./index.html" class="text-mid hover:text-primary transition-colors nav-link-hover">首页</a>
+                <div class="dropdown">
+                    <span class="text-mid hover:text-primary transition-colors nav-link-hover">服务器指南</span>
+                    <div class="dropdown-menu rounded-xl py-2 text-sm">
+                        <a href="./guide.html#gameplay" class="block px-4 py-2 text-mid hover:text-primary hover:bg-bgSoft transition-colors">玩法介绍</a>
+                        <a href="./guide.html#connect" class="block px-4 py-2 text-mid hover:text-primary hover:bg-bgSoft transition-colors">连接教程</a>
+                        <a href="./guide.html#rules" class="block px-4 py-2 text-mid hover:text-primary hover:bg-bgSoft transition-colors">服务器规则</a>
+                        <a href="./donate.html" class="block px-4 py-2 text-primary bg-bgSoft">捐助支持</a>
+                    </div>
+                </div>
+                <a id="mapLink" href="#" target="_blank" class="text-mid hover:text-primary transition-colors nav-link-hover">家园世界地图</a>
+                <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="text-mid hover:text-primary transition-colors nav-link-hover">服务器合影</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menuBtn" class="text-mid focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100">
+        <div class="px-4 py-3 space-y-1">
+            <a href="./index.html" class="block py-2 text-mid">首页</a>
+            <div class="mobile-dropdown">
+                <div class="flex justify-between items-center py-2 text-mid mobile-dropdown-btn">
+                    <span>服务器指南</span>
+                    <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+                <div class="mobile-dropdown-content hidden pl-4 pb-2 space-y-1 text-sm">
+                    <a href="./guide.html#gameplay" class="block py-1 text-gray-500">玩法介绍</a>
+                    <a href="./guide.html#connect" class="block py-1 text-gray-500">连接教程</a>
+                    <a href="./guide.html#rules" class="block py-1 text-gray-500">服务器规则</a>
+                    <a href="./donate.html" class="block py-1 text-gray-500">捐助支持</a>
+                </div>
+            </div>
+            <a id="mapLinkMobile" href="#" target="_blank" class="block py-2 text-mid">家园世界地图</a>
+            <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="block py-2 text-mid">服务器合影</a>
+        </div>
+    </div>
+</nav>
+<div class="page-content">
+    <section class="pt-32 pb-16 px-4">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-[clamp(1.8rem,4vw,2.4rem)] font-medium text-deep mb-8 text-center">捐助支持</h1>
+            <div class="glass-card rounded-2xl p-7 glass-card-hover mb-8">
+                <h2 class="text-xl font-medium text-deep mb-4 text-center">关于捐助</h2>
+                <p class="text-sm leading-relaxed text-center max-w-xl mx-auto">
+                    您的捐助将用于服务器维护和升级。捐助后您不会获得任何额外的服务器内容。<br>
+                    捐助金额超过 5 元将记录在下方列表中，如果没出现可以联系服主进行添加。<br>
+                    <span class="text-red-400 font-medium">赞助后金额不可退回！如果你还没成年，那就不建议进行捐助呢。</span>
+                </p>
+            </div>
+            <div class="glass-card rounded-2xl p-7 glass-card-hover mb-8">
+                <h2 class="text-xl font-medium text-deep mb-4 text-center">扫码捐助</h2>
+                <div class="flex justify-center">
+                    <div class="text-center">
+                        <img src="qr.jpg" alt="捐助二维码" class="w-56 h-56 object-contain mx-auto rounded-2xl border-4 border-gray-100 shadow-sm">
+                        <p class="text-gray-500 text-sm mt-3">截图识别二维码进行捐助</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card rounded-2xl p-7 glass-card-hover">
+                <h2 class="text-xl font-medium text-deep mb-4 text-center">捐助光荣榜</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs text-gray-500">
+                            <tr class="border-b border-gray-200">
+                                <th scope="col" class="px-6 py-3 font-medium">捐助者</th>
+                                <th scope="col" class="px-6 py-3 font-medium">金额</th>
+                                <th scope="col" class="px-6 py-3 font-medium">留言</th>
+                            </tr>
+                        </thead>
+                        <tbody id="donateList">
+                            <tr><td colspan="3" class="px-6 py-4 text-center text-gray-500">正在加载名单...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="border-t border-gray-100 py-8 bg-white/50">
+        <div class="max-w-6xl mx-auto px-4 py-6 text-center text-mid text-sm">
+            <p>此情可待成追忆，只是当时已惘然</p>                    
+            <p class="mt-2">©2026 森屿小破服 mc热爱者社区</p>
+        </div>
+    </footer>
+</div>
+<script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mapLink = document.getElementById('mapLink');
+    const mapLinkMobile = document.getElementById('mapLinkMobile');
+    if (menuBtn) {
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+    if (mapLink && mapLinkMobile) {
+        mapLink.href = MAP_VIEW_URL;
+        mapLinkMobile.href = MAP_VIEW_URL;
+    }
+    document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('svg');
+            content.classList.toggle('hidden');
+            icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        });
+    });
+    // 桌面端下拉菜单点击兼容
+    document.querySelectorAll('.dropdown').forEach(drop => {
+        const trigger = drop.querySelector('span');
+        const menu = drop.querySelector('.dropdown-menu');
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isVisible = menu.style.opacity === '1';
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+                m.style.opacity = '0';
+                m.style.visibility = 'hidden';
+            });
+            if (!isVisible) {
+                menu.style.opacity = '1';
+                menu.style.visibility = 'visible';
+                menu.style.transform = 'translateX(-50%) translateY(0)';
+            }
+        });
+    });
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.style.opacity = '0';
+            menu.style.visibility = 'hidden';
+        });
+    });
+    fetch('donate.json')
+        .then(response => {
+            if (!response.ok) throw new Error('网络响应错误');
+            return response.json();
+        })
+        .then(data => {
+            const list = document.getElementById('donateList');
+            list.innerHTML = '';
+            if (data.length === 0) {
+                list.innerHTML = '<tr><td colspan="3" class="px-6 py-4 text-center text-gray-500">暂无捐助记录，期待你的支持 💚</td></tr>';
+                return;
+            }
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-100 hover:bg-bgSoft transition-colors';
+                
+                const message = item.message ? item.message : '<span class="text-gray-400">-</span>';
+                row.innerHTML = `
+                    <th scope="row" class="px-6 py-4 font-medium text-deep whitespace-nowrap">
+                        ${item.name}
+                    </th>
+                    <td class="px-6 py-4 text-success font-medium">
+                        ${item.amount}
+                    </td>
+                    <td class="px-6 py-4 text-gray-500">
+                        ${message}
+                    </td>
+                `;
+                list.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('读取捐助名单失败:', error);
+            document.getElementById('donateList').innerHTML = '<tr><td colspan="3" class="px-6 py-4 text-center text-red-400">加载失败，请检查 donate.json 文件</td></tr>';
+        });
+</script>
+</body>
+</html>
