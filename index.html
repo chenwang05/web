@@ -370,7 +370,7 @@
             const statusEl = document.getElementById('serverStatus');
             const playerCountEl = document.getElementById('playerCount');
             const maxPlayerEl = document.getElementById('maxPlayer');
-            const api = `https://api.mcsrvstat.us/2/${QUERY_IP}`;
+            const api = `https://api.mcsrvstat.us/3/${QUERY_IP}`;
             try {
                 const response = await fetch(api);
                 const data = await response.json();
