@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文档 - 森屿 Minecraft</title>
+    <link rel="icon" href="tb.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#7a9b7c',
+                        primaryLight: '#95b793',
+                        success: '#86a887',
+                        warning: '#d9b382',
+                        danger: '#d07b7b',
+                        muted: '#8a8a8a',
+                        bgSoft: '#f7f5f0',
+                        bgGradientStart: '#f0f3ee',
+                        bgGradientEnd: '#faf8f3',
+                        indigo: '#a59bbf'
+                    },
+                    fontFamily: {
+                        sans: ['"PingFang SC"', '"Microsoft YaHei"', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-world {
+                background: linear-gradient(180deg, #f0f3ee 0%, #f7f5f0 50%, #faf8f3 100%);
+                min-height: 100vh;
+            }
+            .glass-card {
+                background-color: #ffffff;
+                border: 1px solid #eceae4;
+                box-shadow: 0 8px 32px rgba(122, 155, 124, 0.08);
+            }
+            .glass-card-hover {
+                transition: all 0.3s ease;
+            }
+            .glass-card-hover:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 12px 40px rgba(122, 155, 124, 0.12);
+            }
+            .glass-nav {
+                background-color: rgba(255, 255, 255, 0.95);
+                border-bottom: 1px solid #eceae4;
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
+            .nav-link-hover {
+                position: relative;
+                cursor: pointer;
+            }
+            .nav-link-hover::after {
+                content: "";
+                position: absolute;
+                width: 0;
+                height: 1.5px;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: -4px;
+                background-color: #7a9b7c;
+                transition: width 0.24s ease;
+            }
+            .nav-link-hover:hover::after {
+                width: 100%;
+            }
+            .dropdown {
+                position: relative;
+            }
+            .dropdown-menu {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%) translateY(6px);
+                min-width: 150px;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.22s ease;
+                z-index: 60;
+                background: #fff;
+                border: 1px solid #eceae4;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            }
+            .dropdown:hover .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) translateY(0);
+            }
+            .page-content {
+                position: relative;
+                z-index: 1;
+            }
+            .text-deep {
+                color: #2d3a2e;
+            }
+            .text-mid {
+                color: #5a665b;
+            }
+            .doc-img {
+                width: 100%;
+                border-radius: 12px;
+                border: 1px solid #eceae4;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-world text-mid font-sans scroll-smooth">
+<script>
+    const SERVER_IP = "senyumc.top";
+    const MAP_VIEW_URL = "https://map.senyumc.top";
+</script>
+
+<!-- 导航栏（不用改） -->
+<nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 glass-nav">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+                <a href="./index.html" class="text-lg font-medium text-deep">森屿小破服</a>
+            </div>
+            <div class="hidden md:flex space-x-7 items-center">
+                <a href="./index.html" class="text-mid hover:text-primary transition-colors nav-link-hover">首页</a>
+                <div class="dropdown">
+                    <span class="text-primary font-medium nav-link-hover">服务器指南</span>
+                    <div class="dropdown-menu rounded-xl py-2 text-sm">
+                        <a href="./docs.html" class="block px-4 py-2 text-mid hover:text-primary hover:bg-bgSoft transition-colors">文档</a>
+                        <a href="./guide.html#gameplay" class="block px-4 py-2 text-mid hover:text-primary hover:bg-bgSoft transition-colors">玩法介绍</a>
+                        <a href="./guide.html#connect" class="block px-4 py-2 text-mid hover:text-primary hover:bg-bgSoft transition-colors">连接教程</a>
+                        <a href="./guide.html#rules" class="block px-4 py-2 text-mid hover:text-primary hover:bg-bgSoft transition-colors">服务器规则</a>
+                        <a href="./donate.html" class="block px-4 py-2 text-mid hover:text-primary hover:bg-bgSoft transition-colors">捐助支持</a>
+                        <a href="https://shop.senyumc.top" target="_blank" class="block px-4 py-2 text-mid hover:text-primary hover:bg-bgSoft transition-colors">商店</a>
+                    </div>
+                </div>
+                <a id="mapLink" href="#" target="_blank" class="text-mid hover:text-primary transition-colors nav-link-hover">地图</a>
+                <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="text-mid hover:text-primary transition-colors nav-link-hover">服务器合影</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menuBtn" class="text-mid focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100">
+        <div class="px-4 py-3 space-y-1">
+            <a href="./index.html" class="block py-2 text-mid">首页</a>
+            <div class="mobile-dropdown">
+                <div class="flex justify-between items-center py-2 text-primary font-medium mobile-dropdown-btn">
+                    <span>服务器指南</span>
+                    <svg class="w-4 h-4 transition-transform" style="transform: rotate(180deg)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+                <div class="mobile-dropdown-content pl-4 pb-2 space-y-1 text-sm">
+                    <a href="./docs.html" class="block py-1 text-gray-500">文档</a>
+                    <a href="./guide.html#gameplay" class="block py-1 text-gray-500">玩法介绍</a>
+                    <a href="./guide.html#connect" class="block py-1 text-gray-500">连接教程</a>
+                    <a href="./guide.html#rules" class="block py-1 text-gray-500">服务器规则</a>
+                    <a href="./donate.html" class="block py-1 text-gray-500">捐助支持</a>
+                    <a href="https://shop.senyumc.top" target="_blank" class="block py-1 text-gray-500">商店</a>
+                </div>
+            </div>
+            <a id="mapLinkMobile" href="#" target="_blank" class="block py-2 text-mid">地图</a>
+            <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank" class="block py-2 text-mid">服务器合影</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ========== 直接在这里改内容 ========== -->
+<div class="page-content">
+    <div class="pt-32 pb-16 px-4">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-2xl font-medium text-deep mb-2 text-center">文档</h1>
+            <p class="text-center text-gray-500 text-sm mb-8">服务器玩家功能指南</p>
+
+            <!-- 指南说明 -->
+            <div class="glass-card rounded-2xl p-6 glass-card-hover mb-6">
+                <p class="leading-relaxed">本指南面向全体玩家，介绍服务器内各插件的玩法和常用命令。</p>
+                <p class="leading-relaxed mt-2">输入 <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 text-deep">/cd</code> 可以打开服务器主菜单，绝大多数功能都能在菜单里一键直达。</p>
+            </div>
+
+            <!-- 目录 -->
+            <div class="glass-card rounded-2xl p-6 glass-card-hover mb-6">
+                <h2 class="text-lg font-medium text-deep mb-4">目录</h2>
+                <div class="flex flex-wrap gap-2 text-sm">
+                    <a href="#auth" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">一、注册与登录</a>
+                    <a href="#menu" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">二、服务器主菜单</a>
+                    <a href="#travel" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">三、传送与家园</a>
+                    <a href="#worlds" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">四、世界一览</a>
+                    <a href="#economy" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">五、经济与商店</a>
+                    <a href="#dominion" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">六、领地系统</a>
+                    <a href="#skills" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">七、技能系统</a>
+                    <a href="#signin" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">八、每日签到</a>
+                    <a href="#fly" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">九、飞行时间</a>
+                    <a href="#poses" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">十、姿势互动</a>
+                    <a href="#carry" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">十一、抱起小伙伴</a>
+                    <a href="#fakeplayer" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">十二、假人系统</a>
+                    <a href="#skin" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">十三、皮肤更换</a>
+                    <a href="#qq" class="px-3 py-1.5 rounded-lg bg-bgSoft hover:text-primary transition-colors">十四、QQ群互通</a>
+                </div>
+            </div>
+
+            <!-- 一、注册与登录 -->
+            <section id="auth" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-primary rounded-full"></span>
+                    一、注册与登录
+                </h2>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <p class="mb-4">首次进入服务器需要注册，之后每次登录都需要输入密码。</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="text-left text-deep">
+                                    <th class="py-2 pr-4 font-medium border-b border-gray-200">命令</th>
+                                    <th class="py-2 font-medium border-b border-gray-200">说明</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-500">
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/register &lt;密码&gt; &lt;重复密码&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">首次进入时注册账号</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/login &lt;密码&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">登录</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/changepassword &lt;旧密码&gt; &lt;新密码&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">修改密码</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/logout</code></td>
+                                    <td class="py-2 border-b border-gray-100">退出登录</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/email add &lt;邮箱&gt; &lt;重复邮箱&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">绑定邮箱，用于找回密码</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <ul class="space-y-2 text-sm mt-4">
+                        <li class="flex gap-2"><span class="text-primary font-medium">·</span> 密码长度要求：<strong class="text-deep font-medium">8 ~ 26 位</strong>，请勿使用过于简单的密码。</li>
+                        <li class="flex gap-2"><span class="text-primary font-medium">·</span> 密码只用于本服务器，管理员不会向你索要，<span class="text-danger font-medium">谨防诈骗</span>。</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 二、服务器主菜单 -->
+            <section id="menu" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-success rounded-full"></span>
+                    二、服务器主菜单（/cd）
+                </h2>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <p class="mb-4">输入 <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 text-deep">/cd</code> 打开主菜单，包含以下快捷入口：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> 返回主城 / 家园世界 / 资源世界 / 返回上一位置</li>
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> 玩家传送请求（/tpa 管理）</li>
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> 我的私人家园、领地圈地</li>
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> 玩家拍卖行、物品回收 / 商店</li>
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> 每日签到、新手礼包</li>
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> 原地坐下、皮肤更换中心</li>
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> 服务器规章制度、玩家竞技场</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 三、传送、家园 -->
+            <section id="travel" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-warning rounded-full"></span>
+                    三、传送、家园
+                </h2>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover mb-6">
+                    <h3 class="text-lg font-medium text-deep mb-3">家园系统</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="text-left text-deep">
+                                    <th class="py-2 pr-4 font-medium border-b border-gray-200">命令</th>
+                                    <th class="py-2 font-medium border-b border-gray-200">说明</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-500">
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/sethome &lt;名称&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">在脚下设置家（默认权限组最多可设 <strong class="text-deep font-medium">3 个</strong>）</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/home [名称]</code></td>
+                                    <td class="py-2 border-b border-gray-100">回家</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/delhome &lt;名称&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">删除家</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <h3 class="text-lg font-medium text-deep mb-3">传送</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="text-left text-deep">
+                                    <th class="py-2 pr-4 font-medium border-b border-gray-200">命令</th>
+                                    <th class="py-2 font-medium border-b border-gray-200">说明</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-500">
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/spawn</code></td>
+                                    <td class="py-2 border-b border-gray-100">回到主城出生点</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/back</code></td>
+                                    <td class="py-2 border-b border-gray-100">返回上次传送/死亡的位置</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/tpa &lt;玩家&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">请求传送到某玩家身边</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/tpahere &lt;玩家&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">请求某玩家传送到你身边</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/tpaccept</code> / <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/tpdeny</code> / <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/tpacancel</code></td>
+                                    <td class="py-2 border-b border-gray-100">接受 / 拒绝 / 取消传送请求</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/warp &lt;名称&gt;</code> / <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/warps</code></td>
+                                    <td class="py-2 border-b border-gray-100">前往地标 / 查看地标列表（如 lobby 主城、shop 商店等）</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/tpr</code></td>
+                                    <td class="py-2 border-b border-gray-100">随机传送（默认送往资源世界，范围 100~1500 格），适合出门挖矿开荒</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4">传送有 <strong class="text-deep font-medium">60 秒冷却</strong>，请合理安排。</p>
+                </div>
+            </section>
+
+            <!-- 四、世界一览 -->
+            <section id="worlds" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-indigo rounded-full"></span>
+                    四、世界一览
+                </h2>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <p class="mb-4">服务器包含以下世界（可在主菜单快速传送）：</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="text-left text-deep">
+                                    <th class="py-2 pr-4 font-medium border-b border-gray-200">世界</th>
+                                    <th class="py-2 font-medium border-b border-gray-200">说明</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-500">
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top text-deep">大厅（主城）</td>
+                                    <td class="py-2 border-b border-gray-100">出生点与主城，由地标 <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 text-deep">lobby</code> 前往</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top text-deep">家园世界</td>
+                                    <td class="py-2 border-b border-gray-100">建家、圈地的主要生存世界</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top text-deep">资源世界</td>
+                                    <td class="py-2 border-b border-gray-100">公共资源采集世界，<code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 text-deep">/tpr</code> 随机传送默认目的地</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top text-deep">玩家竞技场</td>
+                                    <td class="py-2 border-b border-gray-100">PvP 对战区域</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top text-deep">下界 / 末地</td>
+                                    <td class="py-2 border-b border-gray-100">正常生存维度</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 五、经济、商店与网页商店 -->
+            <section id="economy" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-primary rounded-full"></span>
+                    五、经济、商店与网页商店
+                </h2>
+                <p class="mb-4">服务器货币为<strong class="text-deep font-medium">金币（$）</strong>。</p>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover mb-6">
+                    <h3 class="text-lg font-medium text-deep mb-3">金币相关</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="text-left text-deep">
+                                    <th class="py-2 pr-4 font-medium border-b border-gray-200">命令</th>
+                                    <th class="py-2 font-medium border-b border-gray-200">说明</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-500">
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/balance</code>（<code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/bal</code>）</td>
+                                    <td class="py-2 border-b border-gray-100">查询余额</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/pay &lt;玩家&gt; &lt;金额&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">向其他玩家转账</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/balancetop</code></td>
+                                    <td class="py-2 border-b border-gray-100">查看全服财富排行</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover mb-6">
+                    <h3 class="text-lg font-medium text-deep mb-3">网页商店</h3>
+                    <p class="leading-relaxed">浏览器打开 <a href="https://shop.senyumc.top" target="_blank" class="text-primary font-medium hover:underline">https://shop.senyumc.top</a> 即可使用网页商店，支持市场交易、拍卖、邮件领取、排行榜等功能，游戏内外的货币与物品数据实时同步。</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <h3 class="text-lg font-medium text-deep mb-3">游戏内配套命令（/ws）</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="text-left text-deep">
+                                    <th class="py-2 pr-4 font-medium border-b border-gray-200">命令</th>
+                                    <th class="py-2 font-medium border-b border-gray-200">说明</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-500">
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/ws gui</code> / <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/ws home</code></td>
+                                    <td class="py-2 border-b border-gray-100">打开商店界面</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/ws password &lt;密码&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">设置网页商店的登录密码</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/ws market</code></td>
+                                    <td class="py-2 border-b border-gray-100">打开市场</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/ws claim</code></td>
+                                    <td class="py-2 border-b border-gray-100">领取网页上购买的物品</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/ws mailbox</code></td>
+                                    <td class="py-2 border-b border-gray-100">打开邮箱</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/ws recharge</code></td>
+                                    <td class="py-2 border-b border-gray-100">充值</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/ws gamecoin</code> / <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/ws shopcoin</code></td>
+                                    <td class="py-2 border-b border-gray-100">查询游戏币 / 商店币</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 六、领地系统 -->
+            <section id="dominion" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-success rounded-full"></span>
+                    六、领地系统
+                </h2>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover mb-6">
+                    <p class="mb-4">用<strong class="text-deep font-medium">木锄</strong>即可圈地，保护你的建筑不被他人破坏：</p>
+                    <ol class="list-decimal pl-5 space-y-2 text-sm">
+                        <li>手持<strong class="text-deep font-medium">木锄</strong>，左键方块选第一个点，右键方块选第二个点（两点确定一个长方体区域，自动包含全高度）。</li>
+                        <li>输入 <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 text-deep">/dominion create &lt;领地名称&gt;</code> 创建领地，创建时按方块数量扣费。</li>
+                        <li>手持<strong class="text-deep font-medium">线</strong>点击方块，可查看脚下是哪个领地、归谁所有。</li>
+                        <li>输入 <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 text-deep">/dominion</code> 打开领地管理菜单，成员管理、分组权限、访客权限等都在菜单里点点即可完成。</li>
+                    </ol>
+                </div>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <h3 class="text-lg font-medium text-deep mb-3">规则与限制</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> 每人在主世界最多创建 <strong class="text-deep font-medium">30 个</strong>领地（含子领地），单领地最大 <strong class="text-deep font-medium">128 × 128</strong>，最小 4 × 4。</li>
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> 价格 <strong class="text-deep font-medium">0.7 金币/方块</strong>，圈地必须是长方形。</li>
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> 子领地最多嵌套 3 层。</li>
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 text-deep">/dominion tp &lt;领地&gt;</code> 可传送到自己的领地（传送延迟 5 秒、冷却 10 秒，期间移动会取消）。</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 七、技能系统 -->
+            <section id="skills" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-warning rounded-full"></span>
+                    七、技能系统
+                </h2>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover mb-6">
+                    <p class="mb-4">玩游戏就能涨经验！挖矿、种田、钓鱼、战斗等行为都会提升对应技能等级，升级解锁被动能力和法力技能。</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="text-left text-deep">
+                                    <th class="py-2 pr-4 font-medium border-b border-gray-200">命令</th>
+                                    <th class="py-2 font-medium border-b border-gray-200">说明</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-500">
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/skills</code></td>
+                                    <td class="py-2 border-b border-gray-100">打开技能菜单，查看所有技能与升级路线</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/stats</code></td>
+                                    <td class="py-2 border-b border-gray-100">查看自己的属性面板</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/top [技能]</code></td>
+                                    <td class="py-2 border-b border-gray-100">查看全服排行</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/mana</code></td>
+                                    <td class="py-2 border-b border-gray-100">查看法力值</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/sources &lt;技能&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">查看某技能的经验来源</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/claimitems</code></td>
+                                    <td class="py-2 border-b border-gray-100">领取等级奖励物品</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <h3 class="text-lg font-medium text-deep mb-3">已开启的 11 项技能</h3>
+                    <p class="text-sm">农业、伐木、采矿、钓鱼、挖掘、射箭、防御、战斗、敏捷、炼金、附魔（满级均为 <strong class="text-deep font-medium">100 级</strong>）。</p>
+                </div>
+            </section>
+
+            <!-- 八、每日签到 -->
+            <section id="signin" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-indigo rounded-full"></span>
+                    八、每日签到
+                </h2>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <p class="mb-4">每天输入 <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 text-deep">/signin</code>（或 <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 text-deep">/litesignin</code>）打开签到界面，点一下即可领取当日奖励。</p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex gap-2"><span class="text-indigo font-medium">·</span> 每日签到可得 <strong class="text-deep font-medium">150 金币</strong>。</li>
+                        <li class="flex gap-2"><span class="text-indigo font-medium">·</span> <strong class="text-deep font-medium">连续签到</strong>有额外奖励：如连签 3 天奖励翻倍、连签 7 天可获特殊装备与金苹果、周日有加餐、累计签到满 100 天更有大奖。</li>
+                        <li class="flex gap-2"><span class="text-indigo font-medium">·</span> 断签了也不用慌，可以使用<strong class="text-deep font-medium">补签卡</strong>补签。</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 九、飞行时间 -->
+            <section id="fly" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-primary rounded-full"></span>
+                    九、飞行时间
+                </h2>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover mb-6">
+                    <p class="mb-4">飞行时间按分钟计费，飞行时屏幕上方有倒计时条。</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="text-left text-deep">
+                                    <th class="py-2 pr-4 font-medium border-b border-gray-200">命令</th>
+                                    <th class="py-2 font-medium border-b border-gray-200">说明</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-500">
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/fly buy &lt;数量&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">购买飞行时间，<strong class="text-deep font-medium">50 金币/分钟</strong>（可用 m 分钟、h 小时、d 天作单位）</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/fly time</code></td>
+                                    <td class="py-2 border-b border-gray-100">查看剩余飞行时间</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/fly pause</code></td>
+                                    <td class="py-2 border-b border-gray-100">暂停倒计时（站着休息时省钱）</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/fly resume</code></td>
+                                    <td class="py-2 border-b border-gray-100">恢复倒计时</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <p class="text-sm text-gray-500">飞行时间仅限主世界使用，累计上限详见 <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 text-deep">/fly buy</code> 提示。签到活动、节日活动也会赠送飞行时间。</p>
+                </div>
+            </section>
+
+            <!-- 十、姿势互动 -->
+            <section id="poses" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-success rounded-full"></span>
+                    十、姿势互动
+                </h2>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover mb-6">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="text-left text-deep">
+                                    <th class="py-2 pr-4 font-medium border-b border-gray-200">命令</th>
+                                    <th class="py-2 font-medium border-b border-gray-200">说明</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-500">
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/sit</code></td>
+                                    <td class="py-2 border-b border-gray-100">原地坐下（也可以<strong class="text-deep font-medium">空手右键</strong>楼梯、台阶、地毯直接坐下）</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/lay</code></td>
+                                    <td class="py-2 border-b border-gray-100">原地躺下</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/crawl</code></td>
+                                    <td class="py-2 border-b border-gray-100">爬行</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/legsup</code> / <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/spin</code> / <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/bellyflop</code></td>
+                                    <td class="py-2 border-b border-gray-100">翘腿 / 旋转 / 肚皮蹲等趣味姿势</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <p class="text-sm"><strong class="text-deep font-medium">潜行即可起身</strong>。还可以坐到其他玩家头上（欢乐加倍）。</p>
+                </div>
+            </section>
+
+            <!-- 十一、抱起小伙伴 -->
+            <section id="carry" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-warning rounded-full"></span>
+                    十一、抱起小伙伴
+                </h2>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <p class="leading-relaxed"><strong class="text-deep font-medium">潜行 + 右键</strong>点击目标即可把 TA 抱起来，再次潜行 + 右键把 TA 丢出去。</p>
+                    <p class="leading-relaxed mt-2">可以抱起：猪、鸡、兔子、狼、羊、鹦鹉、村民、牛、熊猫、僵尸、苦力怕、船，以及<strong class="text-deep font-medium">其他玩家</strong>。</p>
+                </div>
+            </section>
+
+            <!-- 十二、假人系统 -->
+            <section id="fakeplayer" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-indigo rounded-full"></span>
+                    十二、假人系统
+                </h2>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <p class="mb-4">每个玩家可以召唤最多 <strong class="text-deep font-medium">2 个</strong>假人（全服上限 10 个），让假人帮你挂机、干活。</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="text-left text-deep">
+                                    <th class="py-2 pr-4 font-medium border-b border-gray-200">命令</th>
+                                    <th class="py-2 font-medium border-b border-gray-200">说明</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-500">
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/fp spawn</code></td>
+                                    <td class="py-2 border-b border-gray-100">在脚下生成一个假人</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/fp kill</code></td>
+                                    <td class="py-2 border-b border-gray-100">移除假人</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/fp list</code></td>
+                                    <td class="py-2 border-b border-gray-100">查看假人列表</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/fp help</code></td>
+                                    <td class="py-2 border-b border-gray-100">查看全部子命令（移动、挖掘、攻击、换肤等）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 十三、皮肤更换 -->
+            <section id="skin" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-primary rounded-full"></span>
+                    十三、皮肤更换
+                </h2>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="text-left text-deep">
+                                    <th class="py-2 pr-4 font-medium border-b border-gray-200">命令</th>
+                                    <th class="py-2 font-medium border-b border-gray-200">说明</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-500">
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/skin</code></td>
+                                    <td class="py-2 border-b border-gray-100">打开皮肤菜单</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/skin set &lt;玩家名&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">使用某位正版玩家的皮肤</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/skin url &lt;图片链接&gt;</code></td>
+                                    <td class="py-2 border-b border-gray-100">通过图片链接加载皮肤</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4 border-b border-gray-100 align-top"><code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 whitespace-nowrap text-deep">/skin clear</code></td>
+                                    <td class="py-2 border-b border-gray-100">恢复默认皮肤</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 十四、QQ 群与游戏互通 -->
+            <section id="qq" class="mb-16 scroll-mt-20">
+                <h2 class="text-xl font-medium text-deep mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-success rounded-full"></span>
+                    十四、QQ 群与游戏互通
+                </h2>
+                <div class="glass-card rounded-2xl p-6 glass-card-hover">
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> 在 QQ 群使用<strong class="text-deep font-medium">绑定</strong>命令可以把 QQ 号与游戏 ID 绑定（6 位验证码，10 分钟内有效，退群自动解绑）。</li>
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> 绑定后可在群内<strong class="text-deep font-medium">查询在线玩家、查看背包</strong>等。</li>
+                        <li class="flex gap-2"><span class="text-success font-medium">·</span> <strong class="text-deep font-medium">聊天互通</strong>：游戏内发送以 <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 text-deep">#</code> 开头的消息会转发到 QQ 群；群内以 <code class="font-mono text-[13px] bg-bgSoft rounded px-1.5 py-0.5 text-deep">#</code> 开头的消息也会转发进游戏。</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+<!-- ========== 内容区域结束 ========== -->
+
+<!-- 页脚（不用改） -->
+<footer class="border-t border-gray-100 py-8 bg-white/50">
+    <div class="max-w-6xl mx-auto px-4 text-center text-mid text-sm">
+        <p>纸上得来终觉浅，绝知此事要躬行</p>
+        <p class="mt-2">© 2026 森屿小破服 mc热爱者社区</p>
+        <p class="mt-2 flex justify-center items-center gap-4 flex-wrap">
+            <a href="https://beian.miit.gov.cn/" target="_blank" class="hover:text-primary transition-colors">
+                赣ICP备2026021809号-1
+            </a>
+            <a href="https://beian.mps.gov.cn/#/query/webSearch?code=3608300200224" rel="noreferrer" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">
+                <img src="gongan.png" alt="公安备案" class="w-4 h-4 inline-block">
+                赣公网安备3608300200224号
+            </a>
+        </p>
+    </div>
+</footer>
+
+<script>
+    document.getElementById('mapLink').href = MAP_VIEW_URL;
+    document.getElementById('mapLinkMobile').href = MAP_VIEW_URL;
+
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll',()=>{
+        if(window.scrollY>30){
+            nav.classList.add("shadow-sm");
+        }else{
+            nav.classList.remove("shadow-sm");
+        }
+    })
+
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click',()=>{
+        mobileMenu.classList.toggle('hidden');
+    })
+
+    document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('svg');
+            content.classList.toggle('hidden');
+            icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        });
+    });
+
+    document.querySelectorAll('.dropdown').forEach(drop => {
+        const trigger = drop.querySelector('span');
+        const menu = drop.querySelector('.dropdown-menu');
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isVisible = menu.style.opacity === '1';
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+                m.style.opacity = '0';
+                m.style.visibility = 'hidden';
+            });
+            if (!isVisible) {
+                menu.style.opacity = '1';
+                menu.style.visibility = 'visible';
+                menu.style.transform = 'translateX(-50%) translateY(0)';
+            }
+        });
+    });
+
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.style.opacity = '0';
+            menu.style.visibility = 'hidden';
+        });
+    });
+</script>
+</body>
+</html>
