@@ -6,7 +6,7 @@
 const CONFIG = {
   SERVER_NAME: "森屿小破服",
   SERVER_IP: "senyumc.top",                 // 展示用地址
-  QUERY_IP: "43.226.60.75:33346",           // 状态查询用 IP:端口（Java 端）
+  QUERY_IP: "43.226.60.75:33347",           // 状态查询用 IP:端口（Java 端）
   MAP_VIEW_URL: "https://map.senyumc.top",
   QQ_GROUP: "993653958",
   QQ_GROUP_URL: "https://qm.qq.com/q/R6Dm45ZpsK",
