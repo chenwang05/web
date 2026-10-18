@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>森屿 Minecraft — Java / 基岩互通 社区原版生存服务器</title>
+<meta name="description" content="森屿（senyumc.top）是一个 Java / 基岩双端互通的社区原版生存 Minecraft 服务器，无需正版账号，领地保护、技能系统、官方商店与拍卖行、每日签到等轻量插件拓展。">
+<link rel="icon" href="tb.png" type="image/png">
+<link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+<div class="aurora"></div>
+<div class="grain"></div>
+<div class="fireflies"></div>
+
+<!-- ================= 导航 ================= -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="./index.html">
+      <img src="tb.png" alt="森屿">
+      <span>
+        <span class="name">森屿</span><br>
+        <span class="sub">SENYU · MINECRAFT</span>
+      </span>
+    </a>
+    <nav class="nav-links">
+      <a href="./index.html">首页</a>
+      <a href="#gameplay">玩法</a>
+      <a href="#worlds">世界</a>
+      <a href="#connect">连接</a>
+      <a href="#rules">规则</a>
+      <a href="./docs.html">玩家手册</a>
+      <a href="./download.html">下载</a>
+      <a href="./donate.html">捐助</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="nav-status" data-status-card>
+        <span class="dot js-dot"></span>
+        <span class="js-state">检测中…</span>
+      </span>
+      <button class="btn primary small" data-copy-ip>复制地址</button>
+      <button class="nav-burger" aria-label="菜单">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="mobile-menu">
+  <a href="./index.html">首页</a>
+  <a href="#gameplay">玩法</a>
+  <a href="#worlds">世界</a>
+  <a href="#connect">连接</a>
+  <a href="#rules">规则</a>
+  <a href="./docs.html">玩家手册</a>
+  <a href="./donate.html">捐助支持</a>
+  <a href="./download.html">下载游戏</a>
+  <a href="#" data-link="MAP_VIEW_URL">实时地图</a>
+  <a href="./status.html">服务器状态</a>
+</div>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker" style="justify-content:center;">COMMUNITY SURVIVAL · 社区原版生存</div>
+    <h1>森屿 Minecraft</h1>
+    <p class="tagline">一座属于 <b>Minecraft 热爱者</b> 的小岛 —— <b>Java / 基岩同服互通</b>，离线也能玩，<br>把原版的乐趣还给你，把安心留给你的建筑。</p>
+
+    <button class="ip-chip" data-copy-ip title="点击复制服务器地址">
+      <span data-text="SERVER_IP">senyumc.top</span>
+      <span class="copy-ico">点击复制</span>
+    </button>
+
+    <div class="badges">
+      <span class="chip tone-sky">☕ Java 版 26.2</span>
+      <span class="chip tone-green">📱 基岩版 26.0+</span>
+      <span class="chip tone-gold">🔓 无需正版账号</span>
+      <span class="chip tone-violet">🌐 双端同服互通</span>
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" data-join-group>加入 QQ 群</button>
+      <a class="btn" href="#connect">连接教程</a>
+      <a class="btn ghost" href="#" data-link="MAP_VIEW_URL">实时地图 🗺️</a>
+    </div>
+    <p class="port-hint">＊ 进服需先在 QQ 群完成账号绑定</p>
+
+    <div class="card status-card" data-status-card>
+      <img class="icon js-icon" src="tb.png" alt="服务器图标">
+      <div>
+        <div class="sc-name">森屿小破服 <span class="js-state" style="font-size:13px;font-weight:500;">检测中…</span></div>
+        <div class="sc-meta">
+          <span class="js-ver">Java / 基岩</span>
+          <span class="chip" style="padding:2px 10px;font-size:12px;"><em data-text="SERVER_IP">senyumc.top</em></span>
+        </div>
+      </div>
+      <div class="sc-right">
+        <div class="players"><span class="js-players">--</span> <small>/ <span class="js-max">--</span></small></div>
+        <div class="players-label">在线玩家</div>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:12px;">
+      <a class="sc-link" href="./status.html">🔍 打开完整状态监测页</a>
+    </p>
+
+    <div class="scroll-hint">SCROLL</div>
+  </div>
+</section>
+
+<!-- ================= 关于 ================= -->
+<section class="block" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="card about-main reveal">
+        <div class="kicker">ABOUT · 关于本服</div>
+        <h2 class="section-title">轻量化插件，原版化生存</h2>
+        <p>森屿是一个主打<b>社区原版生存</b>的 Minecraft 服务器：以原版玩法为核心，插件只用来优化体验，<b>没有魔改装备、没有变态道具</b>，红石、生电、建筑、探索，一切回归游戏本身的乐趣。</p>
+        <p>你可以独居一隅安静盖房，也可以和朋友结伴建造大型社区。我们希望每个来到岛上的人，都能找到一个<b>安心建造、自由探索、互相帮助</b>的家。</p>
+        <p><b>普通玩家权限完整</b>：挖矿、建造、圈地、经济系统全部开放，进来就能玩。</p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="card stat"><span class="num green">双端</span><span class="lab">Java / 基岩共用同一个世界</span></div>
+        <div class="card stat"><span class="num sky">8+</span><span class="lab">世界分区 · 大厅 / 家园 / 资源 / 商店 / 竞技场</span></div>
+        <div class="card stat"><span class="num gold">11 项</span><span class="lab">成长技能线 · 满级 100</span></div>
+        <div class="card stat"><span class="num violet">0 门槛</span><span class="lab">无需正版 · 离线注册即玩</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 服务器特色 ================= -->
+<section class="block" id="gameplay">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">FEATURES · 服务器特色</div>
+      <h2 class="section-title">为什么选择森屿</h2>
+      <p class="section-sub">保留原版的核心乐趣，再把体验上那些"小别扭"一个个磨平。</p>
+    </div>
+    <div class="grid-3">
+      <div class="card feat reveal">
+        <div class="ico">🌳</div>
+        <h3>原版生存核心</h3>
+        <p>自由挖矿、收集、建造、探索、挑战地下城。常规红石机器、农场、刷怪塔都可以放心搭。</p>
+      </div>
+      <div class="card feat tone-sky reveal">
+        <div class="ico">🌉</div>
+        <h3>双端同服互通</h3>
+        <p>通过 Geyser 实现 Java 与基岩互通，电脑、手机、主机玩家在同一片大陆上并肩生存。</p>
+      </div>
+      <div class="card feat tone-gold reveal">
+        <div class="ico">🛡️</div>
+        <h3>全域领地保护</h3>
+        <p>木锄两点即可圈地，建筑别人动不了；子领地、成员分组、访客权限，菜单里点点就完成。</p>
+      </div>
+      <div class="card feat tone-violet reveal">
+        <div class="ico">💰</div>
+        <h3>健康经济系统</h3>
+          <p>金币货币 + 官方商店与玩家拍卖行自由交易，商店零手续费；拍卖行成交按卖家余额档累进税，税金销毁防通胀。</p>
+      </div>
+      <div class="card feat reveal">
+        <div class="ico">⚔️</div>
+        <h3>技能与成长</h3>
+        <p>挖矿种田钓鱼战斗都会涨经验，11 项技能满级 100，升级解锁被动能力与法力技能。</p>
+      </div>
+      <div class="card feat tone-rose reveal">
+        <div class="ico">🤝</div>
+        <h3>友好社区氛围</h3>
+        <p>鼓励互相帮助，严禁恶意破坏与偷盗；反作弊与全程操作回滚在线，安心做自己的岛主。</p>
+      </div>
+    </div>
+
+    <!-- 玩法标签页 -->
+    <div data-tabs style="margin-top:46px;">
+      <div class="tabs reveal">
+        <button class="tab-btn active" data-tab="home">🏠 传送与家园</button>
+        <button class="tab-btn" data-tab="land">🛡️ 领地保护</button>
+        <button class="tab-btn" data-tab="shop">💰 经济与商店</button>
+        <button class="tab-btn" data-tab="skill">⚔️ 技能成长</button>
+        <button class="tab-btn" data-tab="daily">📅 签到与飞行</button>
+        <button class="tab-btn" data-tab="fun">🎭 趣味互动</button>
+        <button class="tab-btn" data-tab="helper">🧍 假人与皮肤</button>
+      </div>
+
+      <div class="card tab-panel active reveal" id="tab-home">
+        <h3>🏠 传送与家园</h3>
+        <p class="desc">一个 /cd 主菜单直达几乎所有功能。设家回家（默认可设 10 个家）、菜单式玩家互传、随机传送开荒。</p>
+        <div class="cmds">
+          <span class="cmd">/cd 主菜单</span>
+          <span class="cmd">/sethome &lt;名称&gt;</span>
+          <span class="cmd">/home</span>
+          <span class="cmd">/back</span>
+          <span class="cmd">/etp 互传菜单</span>
+          <span class="cmd">/tpr 随机传送</span>
+        </div>
+      </div>
+
+      <div class="card tab-panel reveal" id="tab-land">
+        <h3>🛡️ 领地保护（Dominion）</h3>
+        <p class="desc">手持木锄，左键、右键各选一个点围成长方体，/dom create 一键成领地（dominion 可简写为 dom），价格 0.07 金币/方块（只按底面积计费，高度不计，删除不退款）。手持线点击方块还能查看脚下领地归属。每人最多 30 个领地，单领地最大 128×128，子领地可嵌套 3 层。</p>
+        <div class="cmds">
+          <span class="cmd">/dom 管理菜单</span>
+          <span class="cmd">/dom create &lt;名称&gt;</span>
+          <span class="cmd">/dom tp &lt;领地&gt;</span>
+        </div>
+      </div>
+
+      <div class="card tab-panel reveal" id="tab-shop">
+        <h3>💰 经济与商店</h3>
+        <p class="desc">货币为金币。官方商店 /shop 一站式收购出售，玩家拍卖行 /ah 自由定价交易（每人最多 10 件在售，上架 7 天未售出自动过期）。商店零手续费；拍卖行成交时按卖家余额档累进收税，税金销毁防通胀。</p>
+        <div class="cmds">
+          <span class="cmd">/balance 查询余额</span>
+          <span class="cmd">/pay &lt;玩家&gt; &lt;金额&gt;</span>
+          <span class="cmd">/balancetop 财富榜</span>
+          <span class="cmd">/shop 官方商店</span>
+          <span class="cmd">/ah 拍卖行</span>
+          <span class="cmd">/ah sell &lt;价格&gt; 上架</span>
+        </div>
+      </div>
+
+      <div class="card tab-panel reveal" id="tab-skill">
+        <h3>⚔️ 技能成长（AuraSkills）</h3>
+        <p class="desc">玩游戏就能涨经验！农业、伐木、采矿、钓鱼、挖掘、射箭、防御、战斗、敏捷、炼金、附魔共 11 项技能，满级 100，升级解锁被动能力与法力技能。</p>
+        <div class="cmds">
+          <span class="cmd">/skills 技能菜单</span>
+          <span class="cmd">/stats 属性面板</span>
+          <span class="cmd">/mana 法力值</span>
+        </div>
+      </div>
+
+      <div class="card tab-panel reveal" id="tab-daily">
+        <h3>📅 每日签到 &amp; 金币飞行</h3>
+        <p class="desc">每天签到领钻石、金锭、铁锭；连签 3 天奖励翻倍、7 天送超级钻石剑与金苹果、周日加餐金苹果，累计 100 天奖 1 千金币，断签可用补签卡。飞行按分钟计费（0.65 金币/分钟），可随时暂停省钱，高空建造不再手抖。</p>
+        <div class="cmds">
+          <span class="cmd">/signin 签到</span>
+          <span class="cmd">/fly buy &lt;时长&gt;</span>
+          <span class="cmd">/fly time</span>
+          <span class="cmd">/fly pause</span>
+          <span class="cmd">/fly resume</span>
+        </div>
+      </div>
+
+      <div class="card tab-panel reveal" id="tab-fun">
+        <h3>🎭 趣味互动（GSit · PickMeUp）</h3>
+        <p class="desc">空手右键楼梯台阶直接坐下，躺、爬、翘腿、旋转、肚皮蹲样样都行，还能坐在小伙伴头上；潜行 + 右键把朋友、村民甚至苦力怕抱起来就跑，欢乐加倍。</p>
+        <div class="cmds">
+          <span class="cmd">/sit 坐下</span>
+          <span class="cmd">/lay 躺下</span>
+          <span class="cmd">/crawl 爬行</span>
+          <span class="cmd">/legsup 翘腿</span>
+          <span class="cmd">/spin 旋转</span>
+          <span class="cmd">/bellyflop 肚皮蹲</span>
+        </div>
+      </div>
+
+      <div class="card tab-panel reveal" id="tab-helper">
+        <h3>🧍 假人助手 &amp; 皮肤更换</h3>
+        <p class="desc">召唤假人帮你挂机干活，每人最多 2 个、全服上限 10 个；皮肤支持一键套用正版玩家皮肤或图片链接，离线账号也有体面外观。</p>
+        <div class="cmds">
+          <span class="cmd">/fp spawn 召唤假人</span>
+          <span class="cmd">/fp kill 移除</span>
+          <span class="cmd">/fp list 列表</span>
+          <span class="cmd">/skin set &lt;玩家名&gt;</span>
+          <span class="cmd">/skin url &lt;图片链接&gt;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 世界 ================= -->
+<section class="block" id="worlds">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">WORLDS · 世界一览</div>
+      <h2 class="section-title">岛上的几片大陆</h2>
+      <p class="section-sub">主菜单 <span class="cmd">/cd</span> 一键传送。家园世界还有实时网页地图，盖楼的时候让朋友在浏览器里云监工。</p>
+    </div>
+    <div class="grid-3">
+      <div class="card world-card reveal">
+        <div class="w-ico">🏠</div>
+        <h3>大厅 · 主城 <span class="tag spawn">出生点</span></h3>
+        <p>新人落岛的第一站，告示牌与地标建筑都从这里开始逛。</p>
+      </div>
+      <div class="card world-card reveal">
+        <div class="w-ico">🏡</div>
+        <h3>家园世界 <span class="tag survival">建家圈地</span></h3>
+        <p>主要的生存世界：<b>领地</b>普通最多 30 个、VIP 可达 50 个；<b>设置家</b>普通 10 个、VIP 20 个。名额互不占用，<b>永久存档</b>。</p>
+      </div>
+      <div class="card world-card reveal">
+        <div class="w-ico">⛏️</div>
+        <h3>资源世界 <span class="tag survival">公共采集</span></h3>
+        <p><span class="cmd">/tpr</span> 随机传送（100~1500 格）开荒采集。<b>禁止圈地、禁止野外扎根建房</b>，可设置家；<b>每月 28 日换档重置</b>，挖到的资源记得及时搬回家园世界。</p>
+      </div>
+      <div class="card world-card reveal">
+        <div class="w-ico">🛍️</div>
+        <h3>官方商店 <span class="tag spawn">任意位置</span></h3>
+        <p>商店世界已关闭，现在无需前往：任意世界输入 <span class="cmd">/shop</span> 即可打开官方商店，玩家拍卖行 <span class="cmd">/ah</span> 同样全局直达。</p>
+      </div>
+      <div class="card world-card reveal">
+        <div class="w-ico">⚔️</div>
+        <h3>玩家竞技场 <span class="tag pvp">PvP</span></h3>
+        <p>想切磋切磋？约上朋友来竞技场正面交锋，主世界内依旧和平生存。</p>
+      </div>
+      <div class="card world-card reveal">
+        <div class="w-ico">🔥</div>
+        <h3>下界 &amp; 末地 <span class="tag dim">生存维度</span></h3>
+        <p>正常规则的黑暗维度，烈焰棒、末影龙与远古残骸都在老地方等你。<b>禁止圈领地、禁止设置家</b>，仅适合临时探索。</p>
+      </div>
+      <div class="card world-card reveal" style="display:flex;flex-direction:column;justify-content:center;text-align:center;">
+        <div class="w-ico">🗺️</div>
+        <h3 style="justify-content:center;">实时网页地图</h3>
+        <p style="margin-top:10px;"><a class="btn small" href="#" data-link="MAP_VIEW_URL">打开 map.senyumc.top</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 连接教程 ================= -->
+<section class="block" id="connect">
+  <div class="wrap">
+    <div class="sec-head reveal" style="text-align:center;">
+      <div class="kicker" style="justify-content:center;">JOIN · 连接教程</div>
+      <h2 class="section-title">一分钟上岛</h2>
+    </div>
+
+    <div class="addr-line reveal">
+      服务器地址：<span class="ip" data-text="SERVER_IP">senyumc.top</span>
+      <button class="btn primary small" data-copy-ip>复制地址</button>
+    </div>
+    <p style="text-align:center;color:var(--faint);font-size:13.5px;margin-top:10px;" class="reveal">
+      备用地址 <span class="ip" style="font-size:13.5px;" data-text="BACKUP_IP">play.senyumc.top:13347</span>（主地址连不上时使用；“复制地址”复制的是主地址）
+    </p>
+
+    <div class="connect-grid">
+      <div class="card step-card reveal">
+        <div class="head">
+          <div class="badge">☕</div>
+          <h3>Java 版连接步骤</h3>
+        </div>
+        <ol>
+          <li>打开 Minecraft <em>Java 版 26.2</em>，进入多人游戏</li>
+          <li>添加服务器，地址填 <em>senyumc.top:33347</em></li>
+          <li>选中服务器直接加入，离线账号也可游玩</li>
+          <li>首次进入按提示 <em>/register</em> 注册、<em>/login</em> 登录</li>
+        </ol>
+      </div>
+      <div class="card step-card bedrock reveal">
+        <div class="head">
+          <div class="badge">📱</div>
+          <h3>基岩版连接步骤</h3>
+        </div>
+        <ol>
+          <li>打开基岩版，选择 <em>添加外部服务器</em></li>
+          <li>服务器地址填 <em>senyumc.top</em></li>
+          <li>端口：<em>33347</em></li>
+          <li>保存后直接进入，26.0+ 基岩版本均可连接</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="faq reveal" style="margin-top:20px;">
+      <details>
+        <summary>基岩版可以进服吗？<span class="ar">▼</span></summary>
+        <div class="body">可以。服务器通过 Geyser / Floodgate 实现基岩互通，<b>手机、主机、Win10 基岩版（26.0+ 主流版本）均可连接</b>，与 Java 玩家同世界游玩。</div>
+      </details>
+      <details>
+        <summary>需要 Minecraft 正版账号吗？<span class="ar">▼</span></summary>
+        <div class="body">不需要。<b>离线账号即可直接游玩</b>，首次进入注册登录账号即可，支持绑定邮箱找回密码。</div>
+      </details>
+      <details>
+        <summary>连接失败怎么办？<span class="ar">▼</span></summary>
+        <div class="body">① 确认地址填写完整（主地址 <b>senyumc.top:33347</b>，连不上换备用 <b>play.senyumc.top:13347</b>）；② 检查自己的网络；③ 确认游戏版本要求（Java 26.2，旧版本 Java 客户端也可兼容加入 / 基岩 26.0+）。仍无法连接可在 QQ 群内求助。</div>
+      </details>
+      <details>
+        <summary>游戏和启动器去哪里下载？<span class="ar">▼</span></summary>
+        <div class="body">Java 版推荐 <a href="./download.html">下载页</a> 里的 PCL2 / HMCL 启动器；基岩版安卓可以在 <a href="https://mcapks.net" target="_blank">mcapks.net</a> 下载国际版客户端。装好后再回到连接教程添加服务器即可。</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 规则 ================= -->
+<section class="block" id="rules">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">RULES · 服务器规则</div>
+      <h2 class="section-title">岛上的相处之道</h2>
+      <p class="section-sub">规则不多，但都为了让大家住得舒心。完整规则以游戏内公告与 QQ 群公告为准。</p>
+    </div>
+
+    <div class="rules reveal">
+      <details>
+        <summary>🗣️ 聊天言行规范<span class="ar">▼</span></summary>
+        <div class="body">
+          <ul>
+            <li>禁止辱骂、人身攻击、地域歧视、引战或恶意嘲讽</li>
+            <li>禁止刷屏、大量重复发言、私聊轰炸骚扰玩家</li>
+            <li>禁止发布广告、外链、低俗色情及涉政违法言论</li>
+            <li>禁止冒充管理、伪造公告或捏造谣言欺骗玩家</li>
+            <li>禁止宣传其他服务器</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>🎮 游戏行为禁令<span class="ar">▼</span></summary>
+        <div class="body">
+          <ul>
+            <li class="no">严禁外挂、透视、连点、自动挖矿等作弊程序</li>
+            <li class="no">禁止利用 BUG 刷物品 / 金币 / 经验，发现漏洞请上报</li>
+            <li class="no">禁止恶意毁图、高空流水岩浆、TNT 炸图</li>
+            <li class="no">禁止偷箱子、撬领地、闯入他人领地盗取物资</li>
+            <li class="no">禁止长期恶意追杀、堵门、围堵萌新或霸凌</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>⚙️ 红石与生电机器<span class="ar">▼</span></summary>
+        <div class="body">
+          <ul>
+            <li class="ok">常规刷线机、简易全自动农场</li>
+            <li class="ok">普通刷石机、小型生电机器</li>
+            <li class="ok">常规刷怪塔、掉落物收集装置</li>
+            <li class="no">无限高频红石、大范围高频脉冲</li>
+            <li class="no">压服机、卡顿机、炸服机</li>
+            <li class="no">超大型多层堆叠刷怪塔（如百万刷怪塔）、海量漏斗密集堆叠</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>🔒 账号与交易约定<span class="ar">▼</span></summary>
+        <div class="body">
+          <ul>
+            <li>账号禁止售卖、租借、多人共用，被盗被骗服务器概不负责</li>
+            <li>玩家私下交易风险自负，官方不调解私下交易纠纷</li>
+            <li>管理员绝不会私下索要密码、验证码或物资，切勿轻信骗子</li>
+          </ul>
+        </div>
+      </details>
+      <details open>
+        <summary>⚖️ 通用分级处罚标准<span class="ar">▼</span></summary>
+        <div class="body">
+          <div class="punish">
+            <div class="p-row p1"><span class="what"><b>一级违规</b> · 脏话、小刷屏、轻度骚扰</span><span class="pen">口头警告 → 10 分钟 ~ 24 小时禁言</span></div>
+            <div class="p-row p2"><span class="what"><b>二级违规</b> · 吵架、骗物、乱破坏、卡 BUG 牟利</span><span class="pen">1~7 天禁言 / 封禁 · 没收违规物资</span></div>
+            <div class="p-row p3"><span class="what"><b>三级违规</b> · 偷盗、毁建筑、长期霸凌</span><span class="pen">7~30 天封禁 · 清空背包</span></div>
+            <div class="p-row p4"><span class="what"><b>四级违规</b> · 外挂、刷物资、恶意炸服</span><span class="pen">永久封禁账号 · 数据清空</span></div>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 经济与交易 ================= -->
+<section class="block" id="tax">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">ECONOMY · 经济与交易</div>
+      <h2 class="section-title">健康经济 累进税防通胀</h2>
+      <p class="section-sub">官方商店零手续费；玩家拍卖行成交时按卖家当前余额档累进收税，税金直接销毁回收出经济系统，长期抑制通胀。</p>
+    </div>
+    <div class="grid-3">
+      <div class="card feat tone-gold reveal">
+        <div class="ico">🏪</div>
+        <h3>官方商店 /shop</h3>
+        <p>一站式收购出售，物品定价透明稳定，急缺什么随时补给。</p>
+      </div>
+      <div class="card feat tone-green reveal">
+        <div class="ico">🔨</div>
+        <h3>玩家拍卖行 /ah</h3>
+        <p>自由定价挂牌交易，每人最多 10 件在售，7 天未售出自动过期退回。成交时向卖家按<b>余额档累进税 1%~20%</b> 收取税金。</p>
+      </div>
+      <div class="card feat tone-sky reveal">
+        <div class="ico">🔥</div>
+        <h3>税金销毁 回收防通胀</h3>
+        <p>拍卖税金不进任何账户，<b>直接从经济系统销毁</b>。余额越高税率越高，巨富多缴、新人少缴，金币长期保值。</p>
+      </div>
+    </div>
+    <table class="cmd-table reveal">
+      <thead><tr><th>卖家成交时余额（金币）</th><th>成交税率</th><th>示例：成交 ¥10000 实收</th></tr></thead>
+      <tbody>
+        <tr><td>≤ 1,000</td><td>1%</td><td>¥9,900</td></tr>
+        <tr><td>≤ 10,000</td><td>2%</td><td>¥9,800</td></tr>
+        <tr><td>≤ 25,000</td><td>3%</td><td>¥9,700</td></tr>
+        <tr><td>≤ 50,000</td><td>4%</td><td>¥9,600</td></tr>
+        <tr><td>≤ 100,000</td><td>5%</td><td>¥9,500</td></tr>
+        <tr><td>≤ 250,000</td><td>10%</td><td>¥9,000</td></tr>
+        <tr><td>≤ 500,000</td><td>12%</td><td>¥8,800</td></tr>
+        <tr><td>＞ 50 万</td><td>20%</td><td>¥8,000</td></tr>
+      </tbody>
+    </table>
+    <ul class="notice-list reveal">
+      <li><b>仅玩家拍卖行成交时向卖家收税</b>；官方商店 /shop 不收税不加价，买卖全额到账。</li>
+      <li>税率按卖家<b>成交那一刻的余额</b>取档（从上往下第一个满足的档位），钱货两清前先扣税，实收透明。</li>
+      <li>税金<b>全额销毁</b>，不进系统、不进任何玩家口袋，专治通胀。</li>
+      <li>商店店主变更需通过正规流程，禁止随意转移店铺所有权。</li>
+      <li>系统尊重物品标签属性，附魔、自定义物品完整显示信息。</li>
+      <li>禁止利用商店 BUG 刷钱、刷物品，违者按三级违规处理。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="block">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2>岛已就绪，只差一位岛主</h2>
+      <p>复制地址、进群绑定账号，一分钟就能踏上森屿。</p>
+      <div class="actions">
+        <button class="btn primary" data-copy-ip>📋 复制服务器地址</button>
+        <button class="btn" data-join-group>💬 加入 QQ 群</button>
+        <a class="btn" href="./download.html">⬇️ 下载游戏</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 页脚 ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><img src="tb.png" alt="森屿"><span>森屿小破服</span></div>
+        <p class="poem">欲买桂花同载酒，终不似，少年游。</p>
+        <p style="margin-top:10px;">社区生存向 Minecraft 服务器 · Java / 基岩互通<br>原版为核心，轻量拓展，安心建造。</p>
+      </div>
+      <div>
+        <h4>快速导航</h4>
+        <a href="#gameplay">玩法特色</a>
+        <a href="#worlds">世界一览</a>
+        <a href="#connect">连接教程</a>
+        <a href="#rules">服务器规则</a>
+        <a href="./docs.html">玩家手册</a>
+        <a href="./download.html">游戏下载</a>
+      </div>
+      <div>
+        <h4>相关链接</h4>
+        <a href="./status.html">服务器状态</a>
+        <a href="#" data-link="MAP_VIEW_URL">实时地图</a>
+        <a href="https://www.kdocs.cn/l/chRQb2l1OM1w" target="_blank">服务器合影</a>
+        <a href="./donate.html">捐助支持</a>
+        <a href="#" data-link="QQ_GROUP_URL">QQ 群 <span data-text="QQ_GROUP"></span></a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© <span id="year">2026</span> 森屿小破服 · mc 热爱者社区</p>
+      <div class="icp">
+        <a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2026021809号-1</a>
+        <a href="https://beian.mps.gov.cn/#/query/webSearch?code=3608300200224" rel="noreferrer"><img src="gongan.png" alt="公安备案">赣公网安备3608300200224号</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="./assets/main.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
