@@ -7,7 +7,7 @@ const CONFIG = {
   SERVER_NAME: "森屿小破服",
   SERVER_IP: "play.senyumc.top:33347",           // Java 版进服地址（一键复制的默认地址）
   SERVER_IP_BEDROCK: "mc.senyumc.top:33349",   // 基岩版进服地址（端口与 Java 不同）
-  MAP_VIEW_URL: "https://map.senyumc.top",
+  MAP_VIEW_URL: "http://map.senyumc.top",
   QQ_GROUP: "993653958",
   QQ_GROUP_URL: "https://qm.qq.com/q/R6Dm45ZpsK",
 };
